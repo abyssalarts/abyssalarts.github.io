@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brain Dump — Privacy Policy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+:root {
+  --amber:  #f59e0b;
+  --amberd: #b45309;
+  --bg:     #080806;
+  --bg2:    #0f0e0a;
+  --gray1:  #292524;
+  --gray2:  #44403c;
+  --gray3:  #78716c;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  padding: 48px 28px;
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.9;
+}
+
+body::before {
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px);
+  pointer-events:none;z-index:999;
+}
+
+header {
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--gray1);
+  padding-bottom: 28px;
+}
+
+.brand {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--gray2);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 4px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.updated {
+  font-size: 11px;
+  color: var(--gray2);
+  letter-spacing: 2px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--amberd);
+  margin-bottom: 16px;
+}
+.section-label::before { content: '// '; }
+
+h2 {
+  font-size: 16px;
+  letter-spacing: 3px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: var(--amber);
+}
+
+p {
+  font-size: 13px;
+  color: var(--gray3);
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.highlight {
+  color: var(--amber);
+  font-weight: 500;
+}
+
+.check-list {
+  list-style: none;
+  margin: 14px 0;
+}
+.check-list li {
+  font-size: 13px;
+  color: var(--gray3);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gray1);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.check-list li:last-child { border-bottom: none; }
+.check { color: var(--amber); }
+.cross { color: #ef4444; }
+
+.terminal-box {
+  background: var(--bg2);
+  border: 1px solid var(--gray1);
+  border-left: 3px solid var(--amberd);
+  padding: 20px 24px;
+  margin: 20px 0;
+  border-radius: 3px;
+}
+.terminal-box p {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--gray1);
+  font-size: 11px;
+  color: var(--gray2);
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: var(--amber);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">ABYSSAL ARTS</div>
+  <h1>BRAIN DUMP</h1>
+  <div class="updated">PRIVACY POLICY &nbsp;—&nbsp; LAST UPDATED: APRIL 2026</div>
+</header>
+
+<section>
+  <div class="section-label">OVERVIEW</div>
+  <div class="terminal-box">
+    <p>Brain Dump was built on a simple principle: <span class="highlight">your thoughts belong to you.</span> We collect nothing, share nothing, and store everything locally on your device. This is the shortest honest privacy policy in the app store.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">WHAT WE COLLECT</div>
+  <h2>Nothing.</h2>
+  <p>Brain Dump does not collect any personal information, usage data, analytics, or telemetry of any kind.</p>
+  <ul class="check-list">
+    <li><span class="cross">✕</span> No personal information</li>
+    <li><span class="cross">✕</span> No usage analytics</li>
+    <li><span class="cross">✕</span> No crash reporting</li>
+    <li><span class="cross">✕</span> No advertising identifiers</li>
+    <li><span class="cross">✕</span> No location data</li>
+    <li><span class="cross">✕</span> No device information sent anywhere</li>
+    <li><span class="cross">✕</span> No behavioral tracking</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">WHERE YOUR DATA LIVES</div>
+  <h2>Only on your device.</h2>
+  <p>All thoughts, categories, connections, and settings are stored exclusively on your device using local storage. <span class="highlight">Nothing is sent to any server.</span> Nothing is stored in the cloud unless you explicitly choose to export it yourself.</p>
+  <ul class="check-list">
+    <li><span class="check">✓</span> Thoughts stored locally on device only</li>
+    <li><span class="check">✓</span> Voice transcription processed locally or via your chosen provider</li>
+    <li><span class="check">✓</span> No automatic cloud sync or backup</li>
+    <li><span class="check">✓</span> Export is always your choice, always your destination</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">AI PROVIDERS</div>
+  <h2>Optional. Your choice. Your key.</h2>
+  <p>Brain Dump optionally supports AI categorization and analysis via third-party providers including Claude (Anthropic), OpenAI, Google Gemini, and Ollama. This feature is <span class="highlight">entirely opt-in</span> and requires you to provide your own API key.</p>
+  <p>When AI features are enabled, your thought content is sent to your chosen provider for processing. This is governed by that provider's own privacy policy — not ours. We do not store, log, or access your API key beyond what is needed to make the request.</p>
+  <p>Ollama users: all processing happens locally on your device. No data leaves your machine.</p>
+  <ul class="check-list">
+    <li><span class="check">✓</span> AI features are fully optional</li>
+    <li><span class="check">✓</span> You provide your own API key</li>
+    <li><span class="check">✓</span> We never store or share your API key</li>
+    <li><span class="check">✓</span> Ollama option is fully local — zero external calls</li>
+    <li><span class="cross">✕</span> We do not have access to thoughts processed by AI providers</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">THIRD PARTIES</div>
+  <h2>None.</h2>
+  <p>Brain Dump does not integrate any third-party analytics, advertising networks, crash reporting services, or tracking SDKs. <span class="highlight">There are no third parties with access to your data.</span></p>
+  <ul class="check-list">
+    <li><span class="cross">✕</span> No advertising networks</li>
+    <li><span class="cross">✕</span> No analytics SDKs (Firebase, Mixpanel, etc.)</span></li>
+    <li><span class="cross">✕</span> No crash reporting services</li>
+    <li><span class="cross">✕</span> No social media integrations</li>
+    <li><span class="cross">✕</span> No data brokers or data sharing agreements</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">YOUR CONTROL</div>
+  <h2>Complete.</h2>
+  <p>You have full control over your data at all times.</p>
+  <ul class="check-list">
+    <li><span class="check">✓</span> Export all thoughts at any time (JSON, Markdown, Obsidian, ZIP)</li>
+    <li><span class="check">✓</span> Delete individual thoughts at any time</li>
+    <li><span class="check">✓</span> Wipe all data completely from Settings → Privacy & Data → Clear All Data</li>
+    <li><span class="check">✓</span> Uninstalling the app removes all local data permanently</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">CHILDREN</div>
+  <h2>Not directed at children.</h2>
+  <p>Brain Dump is not directed at children under 13. We do not knowingly collect information from children. Since we collect no information from anyone, this is straightforward.</p>
+</section>
+
+<section>
+  <div class="section-label">CHANGES</div>
+  <h2>We'll tell you.</h2>
+  <p>If this privacy policy ever changes, we will update the date above and note the changes in the app's release notes. We will never retroactively change our data practices in ways that are less private than what is described here.</p>
+</section>
+
+<section>
+  <div class="section-label">CONTACT</div>
+  <h2>Questions?</h2>
+  <p>If you have any questions about this privacy policy, contact us at:</p>
+  <div class="terminal-box">
+    <p><span class="highlight">hello@abyssalarts.com</span></p>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 ABYSSAL ARTS</div>
+  <div><a href="/">BACK TO HOME</a></div>
+</footer>
+
+</body>
+</html>
