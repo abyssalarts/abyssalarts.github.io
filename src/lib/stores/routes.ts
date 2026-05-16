@@ -43,6 +43,23 @@ export const routeTree: RouteNode = {
 					description: 'Brain Dump privacy policy'
 				}
 			]
+		},
+		{
+			path: '/auth',
+			name: 'auth',
+			description: 'Authentication',
+			children: [
+				{ path: '/auth/login', name: 'login', description: 'Log in to your account' },
+				{ path: '/auth/register', name: 'register', description: 'Create a new account' }
+			]
+		},
+		{
+			path: '/account',
+			name: 'account',
+			description: 'Your account dashboard',
+			children: [
+				{ path: '/account/settings', name: 'settings', description: 'Account settings' }
+			]
 		}
 	]
 };

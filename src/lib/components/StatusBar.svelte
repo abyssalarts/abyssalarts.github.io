@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import { depth } from '$lib/stores/depth';
 
 	let currentIndex = $state(0);
@@ -19,7 +20,7 @@
 	function getMessages(): string[] {
 		return [
 			`[uptime ${formatUptime()}]  [privacy: nominal]  [env: production]`,
-			`[depth: -${$depth.toFixed(0)}m]  [signal: ████████░░ 82%]  [sessions: 0 active]`,
+			`[depth: -${$depth.toFixed(0)}m]  [signal: ████████░░ 82%]  [session: ${$page.data.user?.username ?? 'none'}]`,
 			`[syscheck] privacy integrity... OK`,
 			`[heartbeat] all systems nominal`,
 			`[uptime ${formatUptime()}]  [depth: -${$depth.toFixed(0)}m]  [signal: strong]`

@@ -10,6 +10,11 @@ build/
 .env.*
 !.env.example
 
+# Local database
+local.db
+local.db-journal
+local.db-wal
+
 # OS artifacts
 .DS_Store
 Thumbs.db

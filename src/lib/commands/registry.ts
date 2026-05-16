@@ -6,11 +6,15 @@ export interface CommandResult {
 	navigateTo?: string;
 }
 
+export interface CommandContext {
+	user?: { username: string; email: string } | null;
+}
+
 export interface CommandDef {
 	name: string;
 	description: string;
 	usage: string;
-	execute: (args: string[], currentPath: string) => CommandResult;
+	execute: (args: string[], currentPath: string, context?: CommandContext) => CommandResult;
 }
 
 const commands = new Map<string, CommandDef>();
@@ -97,7 +101,7 @@ export function resolvePath(target: string, currentPath: string): string {
 	return '/' + parts.join('/');
 }
 
-export function executeCommand(input: string, currentPath: string): CommandResult {
+export function executeCommand(input: string, currentPath: string, context?: CommandContext): CommandResult {
 	const { command, args } = parse(input);
 	if (!command) return { output: [] };
 
@@ -106,5 +110,5 @@ export function executeCommand(input: string, currentPath: string): CommandResul
 		return { output: [`bash: ${command}: command not found`] };
 	}
 
-	return cmd.execute(args, currentPath);
+	return cmd.execute(args, currentPath, context);
 }

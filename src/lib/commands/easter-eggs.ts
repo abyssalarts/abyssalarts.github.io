@@ -1,4 +1,4 @@
-import { registerCommand } from './registry';
+import { registerCommand, type CommandContext } from './registry';
 
 const sessionStart = Date.now();
 
@@ -21,11 +21,12 @@ registerCommand({
 	name: 'sudo',
 	description: 'Run command as root',
 	usage: 'sudo <cmd>',
-	execute() {
+	execute(_args: string[], _currentPath: string, context?: CommandContext) {
+		const username = context?.user?.username ?? 'guest';
 		return {
 			output: [
-				'[sudo] password for guest: ********',
-				'guest is not in the sudoers file.',
+				`[sudo] password for ${username}: ********`,
+				`${username} is not in the sudoers file.`,
 				'This incident will be reported.'
 			]
 		};
@@ -56,7 +57,8 @@ registerCommand({
 	name: 'neofetch',
 	description: 'Display system information',
 	usage: 'neofetch',
-	execute() {
+	execute(_args: string[], _currentPath: string, context?: CommandContext) {
+		const username = context?.user?.username ?? 'guest';
 		return {
 			output: [
 				'',
@@ -66,7 +68,7 @@ registerCommand({
 				'     /_/ |_/_.__/\\_, /___/___/\\_,_/',
 				'                /___/              ',
 				'',
-				'  guest@abyssal-arts.com',
+				`  ${username}@abyssal-arts.com`,
 				'  ─────────────────────',
 				'  OS: AbyssalOS v1.0',
 				'  Host: abyssal-arts.com',
@@ -150,8 +152,8 @@ registerCommand({
 	name: 'whoami',
 	description: 'Display current user',
 	usage: 'whoami',
-	execute() {
-		return { output: ['guest'] };
+	execute(_args: string[], _currentPath: string, context?: CommandContext) {
+		return { output: [context?.user?.username ?? 'guest'] };
 	}
 });
 

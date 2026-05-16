@@ -7,7 +7,7 @@
 </script>
 
 <nav class="breadcrumbs" aria-label="Filesystem navigation">
-	<span class="prompt-user">guest</span><span class="prompt-at">@</span><span class="prompt-host">abyssal-arts</span><span class="prompt-colon">:</span>{#each segments as segment, i}<a
+	<span class="prompt-user">{$page.data.user?.username ?? 'guest'}</span><span class="prompt-at">@</span><span class="prompt-host">abyssal-arts</span><span class="prompt-colon">:</span>{#each segments as segment, i}<a
 			href={segment.path}
 			class="prompt-path"
 			aria-current={i === segments.length - 1 ? 'page' : undefined}

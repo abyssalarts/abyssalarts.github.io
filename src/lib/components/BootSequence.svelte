@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hasBooted, bootComplete } from '$lib/stores/boot';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 
 	interface BootLine {
 		text: string;
@@ -8,27 +9,46 @@
 		className?: string;
 	}
 
-	const bootLines: BootLine[] = [
-		{ text: 'ABYSSAL ARTS BIOS v2.1', delay: 100 },
-		{ text: 'Checking memory... 8192K OK', delay: 100 },
-		{ text: 'Detecting peripherals...', delay: 80 },
-		{ text: '  display: AMBER-CRT-1', delay: 60 },
-		{ text: '  input: standard', delay: 60 },
-		{ text: '  network: CONNECTED', delay: 80 },
-		{ text: 'Loading /etc/abyssal/philosophy.conf... OK', delay: 120 },
-		{ text: 'Mounting /products... 2 entries found', delay: 100 },
-		{ text: 'Mounting /about... OK', delay: 80 },
-		{ text: 'Mounting /privacy... OK', delay: 80 },
-		{ text: '', delay: 200 },
-		{ text: '╔══════════════════════════════════════════════════╗', delay: 40, className: 'notice-box' },
-		{ text: '║  NOTICE: This terminal sets 0 cookies,           ║', delay: 40, className: 'notice-box' },
-		{ text: '║  runs 0 trackers, sends 0 analytics.             ║', delay: 40, className: 'notice-box' },
-		{ text: '║  There is nothing to consent to.                 ║', delay: 40, className: 'notice-box' },
-		{ text: '╚══════════════════════════════════════════════════╝', delay: 300, className: 'notice-box' },
-		{ text: '', delay: 200 },
-		{ text: 'System ready.', delay: 200 },
-		{ text: 'guest@abyssal-arts:~$ _', delay: 500, className: 'prompt' },
-	];
+	let user = $derived($page.data.user);
+
+	let bootLines: BootLine[] = $derived.by(() => {
+		const loggedIn = !!user;
+		const username = user?.username ?? 'guest';
+		const cookieNotice = loggedIn
+			? '║  NOTICE: This terminal sets 1 cookie (session),  ║'
+			: '║  NOTICE: This terminal sets 0 cookies,           ║';
+		const consentNotice = loggedIn
+			? '║  runs 0 trackers, sends 0 analytics.             ║'
+			: '║  runs 0 trackers, sends 0 analytics.             ║';
+		const consentLine = loggedIn
+			? '║  Your session is stored server-side only.         ║'
+			: '║  There is nothing to consent to.                 ║';
+		const promptLine = loggedIn
+			? `session restored — welcome back, ${username}.`
+			: 'guest@abyssal-arts:~$ _';
+
+		return [
+			{ text: 'ABYSSAL ARTS BIOS v2.1', delay: 100 },
+			{ text: 'Checking memory... 8192K OK', delay: 100 },
+			{ text: 'Detecting peripherals...', delay: 80 },
+			{ text: '  display: AMBER-CRT-1', delay: 60 },
+			{ text: '  input: standard', delay: 60 },
+			{ text: '  network: CONNECTED', delay: 80 },
+			{ text: 'Loading /etc/abyssal/philosophy.conf... OK', delay: 120 },
+			{ text: 'Mounting /products... 2 entries found', delay: 100 },
+			{ text: 'Mounting /about... OK', delay: 80 },
+			{ text: 'Mounting /privacy... OK', delay: 80 },
+			{ text: '', delay: 200 },
+			{ text: '╔══════════════════════════════════════════════════╗', delay: 40, className: 'notice-box' },
+			{ text: cookieNotice, delay: 40, className: 'notice-box' },
+			{ text: consentNotice, delay: 40, className: 'notice-box' },
+			{ text: consentLine, delay: 40, className: 'notice-box' },
+			{ text: '╚══════════════════════════════════════════════════╝', delay: 300, className: 'notice-box' },
+			{ text: '', delay: 200 },
+			{ text: 'System ready.', delay: 200 },
+			{ text: promptLine, delay: 500, className: 'prompt' },
+		];
+	});
 
 	let visibleCount = $state(0);
 	let fadingOut = $state(false);

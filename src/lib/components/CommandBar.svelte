@@ -15,6 +15,7 @@
 	import '$lib/commands/navigation';
 	import '$lib/commands/display';
 	import '$lib/commands/easter-eggs';
+	import '$lib/commands/auth';
 
 	let inputValue = $state('');
 	let historyIndex = $state(-1);
@@ -77,7 +78,7 @@
 		historyIndex = -1;
 
 		const rawPath = $page.url.pathname;
-		const result = executeCommand(input, rawPath);
+		const result = executeCommand(input, rawPath, { user: $page.data.user });
 
 		if (result.action === 'clear') {
 			clearOutput();
