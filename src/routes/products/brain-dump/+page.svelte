@@ -3,7 +3,12 @@
 	import AsciiBox from '$lib/components/AsciiBox.svelte';
 	import AsciiDivider from '$lib/components/AsciiDivider.svelte';
 	import FeatureTag from '$lib/components/FeatureTag.svelte';
+	import CommentThread from '$lib/components/CommentThread.svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import { page } from '$app/stores';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 </script>
 
 <div class="man-page">
@@ -103,6 +108,14 @@
 			</a>
 			<div class="cta-hint">Available on Google Play — $4.99, one-time purchase</div>
 		</AsciiBox>
+	</div>
+
+	<div class="man-section" use:reveal>
+		<CommentThread
+			product="brain-dump"
+			initialComments={data.comments}
+			user={$page.data.user ? { id: $page.data.user.id, username: $page.data.user.username } : null}
+		/>
 	</div>
 
 	<div class="man-section" use:reveal>

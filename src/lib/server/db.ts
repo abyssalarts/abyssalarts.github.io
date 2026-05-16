@@ -38,6 +38,32 @@ async function initDb() {
 
 		CREATE INDEX IF NOT EXISTS licenses_user_id_idx ON licenses(user_id);
 		CREATE INDEX IF NOT EXISTS licenses_license_key_idx ON licenses(license_key);
+
+		CREATE TABLE IF NOT EXISTS comments (
+			id TEXT PRIMARY KEY,
+			user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+			product TEXT NOT NULL,
+			body TEXT NOT NULL,
+			parent_id TEXT REFERENCES comments(id) ON DELETE CASCADE,
+			created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+			edited_at INTEGER,
+			deleted INTEGER NOT NULL DEFAULT 0
+		);
+
+		CREATE INDEX IF NOT EXISTS comments_product_idx ON comments(product);
+		CREATE INDEX IF NOT EXISTS comments_user_id_idx ON comments(user_id);
+
+		CREATE TABLE IF NOT EXISTS feedback (
+			id TEXT PRIMARY KEY,
+			user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+			product TEXT NOT NULL,
+			type TEXT NOT NULL,
+			body TEXT NOT NULL,
+			email TEXT,
+			created_at INTEGER NOT NULL DEFAULT (unixepoch())
+		);
+
+		CREATE INDEX IF NOT EXISTS feedback_product_idx ON feedback(product);
 	`);
 }
 

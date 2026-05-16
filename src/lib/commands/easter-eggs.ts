@@ -235,3 +235,31 @@ registerCommand({
 		return { output: [`Unknown product: ${product}`] };
 	}
 });
+
+registerCommand({
+	name: 'feedback',
+	description: 'Submit feedback',
+	usage: 'feedback',
+	execute() {
+		return {
+			output: ['Opening feedback form...'],
+			action: 'navigate' as const,
+			navigateTo: '/feedback'
+		};
+	}
+});
+
+registerCommand({
+	name: 'comment',
+	description: 'Leave a comment on a product page',
+	usage: 'comment',
+	execute() {
+		return {
+			output: [
+				'Comments are on product pages.',
+				'Try: cd products/brain-dump',
+				'     cd products/rift'
+			]
+		};
+	}
+});

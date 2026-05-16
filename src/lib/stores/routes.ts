@@ -60,6 +60,11 @@ export const routeTree: RouteNode = {
 			children: [
 				{ path: '/account/settings', name: 'settings', description: 'Account settings' }
 			]
+		},
+		{
+			path: '/feedback',
+			name: 'feedback',
+			description: 'Submit bug reports, feature requests, or general feedback'
 		}
 	]
 };

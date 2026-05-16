@@ -1,4 +1,5 @@
 import { getUserLicenseForProduct } from '$lib/server/licenses';
+import { getComments } from '$lib/server/comments';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -14,10 +15,13 @@ export const load: PageServerLoad = async ({ locals }) => {
 		}
 	}
 
+	const comments = await getComments('rift');
+
 	return {
 		title: 'Rift',
 		isAuthenticated: !!user,
 		hasLicense,
-		licenseKey
+		licenseKey,
+		comments
 	};
 };
