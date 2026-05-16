@@ -1,42 +1,92 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
 
 ## Project Overview
 
-Static single-page landing site for Abyssal Arts — a solo indie Android dev studio. Hosted on GitHub Pages at abyssal-arts.com. No build tools, no frameworks, no dependencies.
+SvelteKit terminal-experience website for Abyssal Arts -- a solo indie Android dev studio.
+Domain: abyssal-arts.com. Deployment target: Fly.io (adapter-node). Currently Phase 1 (static pages + CLI).
+
+The design vision is "a terminal that happens to be a website" -- behaviorally terminal-like,
+not just themed. Working command bar, boot sequence, depth meter, ambient status bar.
 
 ## Architecture
 
-**Single file: `index.html`** — contains all HTML, CSS (in `<style>`), and JS (in `<script>`). No external CSS/JS files, no bundler, no package.json.
+SvelteKit 5 + TypeScript. Single layout shell wraps all routes with CRT effects,
+breadcrumbs, depth meter, status bar, command bar, and boot sequence overlay.
 
-Sections in order: Hero, Philosophy (01), Products (02), About (03), Contact (04), Footer.
+**Routes:**
+- `/` -- Home (hero, philosophy, products, about teaser, contact)
+- `/products/brain-dump` -- Brain Dump product page (man-page format)
+- `/products/rift` -- Rift product page (man-page format)
+- `/about` -- Studio story
+- `/privacy` -- Global privacy policy
+- `/privacy/brain-dump` -- Brain Dump privacy policy
 
-**JS behavior:** IntersectionObserver adds `.visible` to `.reveal` elements on scroll (threshold 0.1, -40px bottom margin). That's the entire JS surface.
+**Components** (`src/lib/components/`):
+- `BootSequence.svelte` -- POST-style first-visit animation with localStorage skip
+- `CommandBar.svelte` -- CLI palette (/ to open, desktop only)
+- `DepthMeter.svelte` -- Scroll-based depth gauge, hidden on mobile
+- `StatusBar.svelte` -- Ambient rotating system messages
+- `Breadcrumbs.svelte` -- Filesystem-style path navigation (guest@abyssal-arts:~/path$)
+- `AsciiBox.svelte` -- Box-drawing container with optional title
+- `AsciiDivider.svelte` -- Section dividers
+- `ManPageHeader.svelte` -- Man page format header for product pages
+- `CursorBlink.svelte` -- Blinking terminal cursor
+- `ProductCard.svelte` -- Product card for home grid
+- `FeatureTag.svelte` -- Terminal-styled tag
 
-## Visual Identity
+**Stores** (`src/lib/stores/`):
+- `boot.ts` -- Boot state + localStorage persistence
+- `command.ts` -- CLI open/close state, history, output
+- `depth.ts` -- Scroll position to depth-in-meters
+- `routes.ts` -- Route tree used by breadcrumbs and CLI (findNode, getChildren, getPathSegments)
 
-Terminal-amber on near-black. This is non-negotiable — see `ABYSSAL_ARTS_BRAND.md` for the full brand guide.
+**Command System** (`src/lib/commands/`):
+- `registry.ts` -- Command registry, parser, tab completion. Commands self-register on import.
+- `navigation.ts` -- cd, ls
+- `display.ts` -- help, man, cat, history, clear
+- `easter-eggs.ts` -- sudo, rm, neofetch, fortune, ping, uptime, whoami, echo, pwd, date, exit
 
-- **Font:** JetBrains Mono (Google Fonts) — monospace everywhere, no exceptions
-- **Palette:** CSS custom properties on `:root` — `--amber` (#D4890A) primary, `--bg` (#080806) background, `--surface` (#0F0F0D) cards
-- **Effects:** CRT scanlines (`body::after`), vignette (`body::before`), amber glow via `text-shadow`. No gradients, no glassmorphism, no rounded corners
-- **Responsive:** Single breakpoint at 600px
+To add a new command: create a CommandDef in the appropriate file and call registerCommand().
+
+**Styles:** `src/lib/styles/terminal.css` -- global CSS vars, reset, scanlines, CRT vignette, scrollbar, animations.
+
+**Actions:** `src/lib/actions/reveal.ts` -- use:reveal directive for IntersectionObserver scroll-fade-in.
 
 ## Development
 
-No build step. Open `index.html` in a browser or use any local server:
+```
+npm run dev       # Start dev server (localhost:5173)
+npm run build     # Production build
+npm run preview   # Preview production build
+```
 
-```
-python -m http.server 8000
-```
+## Visual Identity (non-negotiable)
+
+Terminal-amber on near-black. Read `ABYSSAL_ARTS_BRAND.md` before content changes.
+
+- Font: JetBrains Mono everywhere, no exceptions
+- Palette: CSS custom properties in terminal.css -- --amber (#D4890A), --bg (#080806), --surface (#0F0F0D)
+- Effects: CRT scanlines, vignette, amber glow. No gradients, no glassmorphism, no rounded corners
+- Responsive: single breakpoint at 600px. Command bar desktop-only.
 
 ## Brand Rules (enforced)
-
-Read `ABYSSAL_ARTS_BRAND.md` before making content changes. Key constraints:
 
 - No emoji in product copy
 - No superlatives ("revolutionary", "game-changing")
 - No fake urgency or dark pattern language
 - Voice: direct, honest, occasionally dry, never corporate
-- Privacy-first messaging — it's the foundation, not a feature
+- Privacy-first messaging -- it's the foundation, not a feature
+
+## Key Patterns
+
+- Svelte 5 runes: $props(), $state(), $derived(), $effect(). No legacy export let or $: syntax.
+- Scroll animations: use:reveal directive on elements that should fade in
+- Terminal containers: AsciiBox for boxed content, AsciiDivider for section breaks
+- Product pages: ManPageHeader + man-page body sections (SYNOPSIS, DESCRIPTION, OPTIONS, SEE ALSO)
+
+## Phase Status
+
+Phase 1 complete: scaffold, all pages, command bar, boot sequence, depth meter, status bar.
+Phase 2 next: auth + accounts (Lucia Auth v3 + Turso). See `docs/Website-Rebuild-Plan.md`.
