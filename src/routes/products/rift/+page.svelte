@@ -4,6 +4,37 @@
 	import AsciiDivider from '$lib/components/AsciiDivider.svelte';
 	import FeatureTag from '$lib/components/FeatureTag.svelte';
 	import { reveal } from '$lib/actions/reveal';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+	let purchasing = $state(false);
+	let error = $state('');
+
+	async function buyRift() {
+		purchasing = true;
+		error = '';
+		try {
+			const res = await fetch('/api/stripe/checkout', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ product: 'rift' })
+			});
+			const json = await res.json();
+			if (!res.ok) {
+				error = json.error || 'Checkout failed';
+				return;
+			}
+			if (json.url) {
+				window.location.href = json.url;
+				return;
+			}
+			error = 'No checkout URL returned';
+		} catch {
+			error = 'Network error — try again';
+		} finally {
+			purchasing = false;
+		}
+	}
 </script>
 
 <div class="man-page">
@@ -98,23 +129,56 @@
 	</div>
 
 	<div class="cta-section" use:reveal>
-		<AsciiBox title="PURCHASE">
-			<div class="cta-command">
-				<span class="cta-prompt">$</span> buy rift
-			</div>
-			<div class="cta-response">
-				<span class="cta-chevron">&gt;</span> Purchase coming soon. Rift is in active development.
-			</div>
-			<div class="cta-response">
-				<span class="cta-chevron">&gt;</span> Follow progress at
-				<a
-					href="https://github.com/Critek-creator/Rift_TerminalV2"
-					target="_blank"
-					rel="noopener"
-					class="cta-link"
-				>github.com/Critek-creator/Rift_TerminalV2</a>
-			</div>
-		</AsciiBox>
+		{#if data.hasLicense}
+			<AsciiBox title="LICENSE ACTIVE">
+				<div class="cta-command">
+					<span class="cta-prompt">$</span> license --status
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> <span class="license-key">{data.licenseKey}</span>
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> status: <span class="status-active">active</span>
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> <a href="/account" class="cta-link">view in account &rarr;</a>
+				</div>
+			</AsciiBox>
+		{:else if data.isAuthenticated}
+			<AsciiBox title="PURCHASE">
+				<div class="cta-command">
+					<span class="cta-prompt">$</span> buy rift
+				</div>
+				{#if error}
+					<div class="cta-response cta-error">
+						<span class="cta-chevron">&gt;</span> {error}
+					</div>
+				{/if}
+				<div class="cta-buy-row">
+					<button class="buy-btn" onclick={buyRift} disabled={purchasing}>
+						{purchasing ? '> processing...' : '> BUY NOW'}
+					</button>
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> one-time purchase. 3-device license.
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> validate once, works offline forever.
+				</div>
+			</AsciiBox>
+		{:else}
+			<AsciiBox title="PURCHASE">
+				<div class="cta-command">
+					<span class="cta-prompt">$</span> buy rift
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> authentication required
+				</div>
+				<div class="cta-response">
+					<span class="cta-chevron">&gt;</span> <a href="/auth/login" class="cta-link">login to purchase &rarr;</a>
+				</div>
+			</AsciiBox>
+		{/if}
 	</div>
 
 	<div class="man-section" use:reveal>
@@ -223,6 +287,46 @@
 
 	.cta-link:hover {
 		color: var(--amber);
+	}
+
+	.cta-error {
+		color: var(--red);
+	}
+
+	.license-key {
+		color: var(--amber);
+		font-weight: 500;
+		letter-spacing: 1px;
+	}
+
+	.status-active {
+		color: var(--green);
+	}
+
+	.cta-buy-row {
+		margin: 12px 0;
+	}
+
+	.buy-btn {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--bg);
+		background: var(--amber);
+		border: none;
+		padding: 8px 24px;
+		cursor: pointer;
+		transition: background 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.buy-btn:hover:not(:disabled) {
+		background: var(--amber-bright);
+		box-shadow: 0 0 20px var(--glow);
+	}
+
+	.buy-btn:disabled {
+		opacity: 0.6;
+		cursor: wait;
 	}
 
 	.see-also-link {

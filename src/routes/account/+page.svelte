@@ -13,12 +13,27 @@
 	});
 
 	const authMethod = $derived(() => {
-		const hasPassword = true;
 		const hasGithub = !!data.user?.githubId;
-		if (hasPassword && hasGithub) return 'email + github';
-		if (hasGithub) return 'github';
+		if (hasGithub) return 'email + github';
 		return 'email';
 	});
+
+	let copiedKey = $state('');
+
+	async function copyKey(key: string) {
+		try {
+			await navigator.clipboard.writeText(key);
+			copiedKey = key;
+			setTimeout(() => { copiedKey = ''; }, 2000);
+		} catch {
+			// fallback
+		}
+	}
+
+	function formatDate(timestamp: number): string {
+		const d = new Date(timestamp * 1000);
+		return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+	}
 </script>
 
 <section class="account-page" use:reveal>
@@ -45,10 +60,43 @@
 	</div>
 
 	<div class="licenses-section" use:reveal>
-		<AsciiBox title="licenses">
-			<p class="placeholder-text">No licenses yet.</p>
-			<p class="placeholder-hint">Rift license management coming in Phase 3.</p>
-		</AsciiBox>
+		{#if data.licenses && data.licenses.length > 0}
+			{#each data.licenses as license}
+				<AsciiBox title={license.product.toUpperCase()}>
+					<div class="license-fields">
+						<div class="field-row">
+							<span class="field-label">key:</span>
+							<span class="license-key-value">{license.license_key}</span>
+						</div>
+						<div class="field-row">
+							<span class="field-label">status:</span>
+							<span class="status-badge" class:status-active={!license.revoked} class:status-revoked={license.revoked}>
+								{license.revoked ? 'revoked' : 'active'}
+							</span>
+						</div>
+						<div class="field-row">
+							<span class="field-label">devices:</span>
+							<span class="field-value">{license.device_count}/{license.max_devices}</span>
+						</div>
+						<div class="field-row">
+							<span class="field-label">issued:</span>
+							<span class="field-value">{formatDate(license.created_at)}</span>
+						</div>
+					</div>
+					<div class="license-actions">
+						<button class="action-link action-btn" onclick={() => copyKey(license.license_key)}>
+							{copiedKey === license.license_key ? '[copied]' : '[copy key]'}
+						</button>
+						<a href="/api/download/rift" class="action-link">[download]</a>
+					</div>
+				</AsciiBox>
+			{/each}
+		{:else}
+			<AsciiBox title="licenses">
+				<p class="placeholder-text">No licenses yet.</p>
+				<p class="placeholder-link"><a href="/products/rift" class="cta-link">Browse products &rarr;</a></p>
+			</AsciiBox>
+		{/if}
 	</div>
 
 	<AsciiDivider />
@@ -104,10 +152,50 @@
 		color: var(--text-secondary);
 	}
 
-	.placeholder-hint {
-		font-size: 11px;
-		color: var(--amber-faint);
-		margin-top: 4px;
+	.placeholder-link {
+		font-size: 12px;
+		margin-top: 8px;
+	}
+
+	.cta-link {
+		color: var(--amber-dim);
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+
+	.cta-link:hover {
+		color: var(--amber);
+	}
+
+	.license-fields {
+		margin-bottom: 12px;
+	}
+
+	.license-key-value {
+		color: var(--amber);
+		font-weight: 500;
+		letter-spacing: 1px;
+	}
+
+	.status-badge {
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.status-active {
+		color: var(--green);
+	}
+
+	.status-revoked {
+		color: var(--red);
+	}
+
+	.license-actions {
+		display: flex;
+		gap: 16px;
+		padding-top: 8px;
+		border-top: 1px solid var(--amber-faint);
 	}
 
 	.account-actions {

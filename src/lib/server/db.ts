@@ -23,6 +23,21 @@ async function initDb() {
 		);
 
 		CREATE INDEX IF NOT EXISTS sessions_user_id_idx ON sessions(user_id);
+
+		CREATE TABLE IF NOT EXISTS licenses (
+			id TEXT PRIMARY KEY,
+			user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+			product TEXT NOT NULL,
+			license_key TEXT UNIQUE NOT NULL,
+			stripe_session_id TEXT,
+			device_count INTEGER NOT NULL DEFAULT 0,
+			max_devices INTEGER NOT NULL DEFAULT 3,
+			created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+			revoked INTEGER NOT NULL DEFAULT 0
+		);
+
+		CREATE INDEX IF NOT EXISTS licenses_user_id_idx ON licenses(user_id);
+		CREATE INDEX IF NOT EXISTS licenses_license_key_idx ON licenses(license_key);
 	`);
 }
 

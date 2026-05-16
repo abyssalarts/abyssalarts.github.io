@@ -192,3 +192,46 @@ registerCommand({
 		return { output: ['logout'], action: 'clear' };
 	}
 });
+
+registerCommand({
+	name: 'buy',
+	description: 'Purchase a product',
+	usage: 'buy <product>',
+	execute(args: string[], _currentPath: string, context?: CommandContext) {
+		const product = args[0]?.toLowerCase();
+		if (!product) {
+			return {
+				output: [
+					'Available products:',
+					'  rift         Terminal-aesthetic IDE (website purchase)',
+					'  brain-dump   Thought capture app ($4.99 on Play Store)',
+					'',
+					'Usage: buy <product>'
+				]
+			};
+		}
+		if (product === 'rift') {
+			if (!context?.user) {
+				return {
+					output: ['Authentication required. Redirecting to login...'],
+					action: 'navigate' as const,
+					navigateTo: '/auth/login'
+				};
+			}
+			return {
+				output: ['Opening Rift product page...'],
+				action: 'navigate' as const,
+				navigateTo: '/products/rift'
+			};
+		}
+		if (product === 'brain-dump' || product === 'braindump') {
+			return {
+				output: [
+					'Brain Dump is $4.99 on the Google Play Store.',
+					'Visit: https://play.google.com/store/apps/dev?id=4852489077865221589'
+				]
+			};
+		}
+		return { output: [`Unknown product: ${product}`] };
+	}
+});
