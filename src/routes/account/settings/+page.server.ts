@@ -1,9 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { hash, verify } from '@node-rs/argon2';
-import { db } from '$lib/server/db';
+import { getDb } from '$lib/server/db';
+import { hashPassword, verifyPassword } from '$lib/server/crypto';
 import type { Actions, PageServerLoad } from './$types';
-
-const argon2Options = { memoryCost: 19456, timeCost: 2, outputLen: 32, parallelism: 1 };
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) redirect(302, '/auth/login');
@@ -31,7 +29,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			await db.execute({
+			await getDb().execute({
 				sql: 'UPDATE users SET username = ?, email = ? WHERE id = ?',
 				args: [username.toLowerCase(), email.toLowerCase(), locals.user.id]
 			});
@@ -66,7 +64,7 @@ export const actions: Actions = {
 			return fail(400, { passwordError: 'Passwords do not match.' });
 		}
 
-		const result = await db.execute({
+		const result = await getDb().execute({
 			sql: 'SELECT hashed_password FROM users WHERE id = ?',
 			args: [locals.user.id]
 		});
@@ -76,13 +74,13 @@ export const actions: Actions = {
 			return fail(400, { passwordError: 'This account uses GitHub login. No password to change.' });
 		}
 
-		const validCurrent = await verify(user.hashed_password as string, currentPassword, argon2Options);
+		const validCurrent = await verifyPassword(user.hashed_password as string, currentPassword);
 		if (!validCurrent) {
 			return fail(400, { passwordError: 'Current password is incorrect.' });
 		}
 
-		const newHash = await hash(newPassword, argon2Options);
-		await db.execute({
+		const newHash = await hashPassword(newPassword);
+		await getDb().execute({
 			sql: 'UPDATE users SET hashed_password = ? WHERE id = ?',
 			args: [newHash, locals.user.id]
 		});

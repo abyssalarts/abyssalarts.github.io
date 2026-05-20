@@ -1,5 +1,5 @@
-import { randomBytes } from 'crypto';
-import { db } from './db';
+import { generateId } from './crypto';
+import { getDb } from './db';
 
 export interface Comment {
 	id: string;
@@ -15,7 +15,7 @@ export interface Comment {
 }
 
 export async function getComments(product: string): Promise<Comment[]> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: `SELECT c.id, c.user_id, u.username, c.product, c.body, c.parent_id,
 		             c.created_at, c.edited_at, c.deleted
 		      FROM comments c
@@ -53,7 +53,7 @@ export async function createComment(
 	parentId?: string
 ): Promise<Comment> {
 	if (parentId) {
-		const parent = await db.execute({
+		const parent = await getDb().execute({
 			sql: 'SELECT id, parent_id FROM comments WHERE id = ? AND deleted = 0',
 			args: [parentId]
 		});
@@ -66,16 +66,16 @@ export async function createComment(
 		}
 	}
 
-	const id = randomBytes(8).toString('hex');
+	const id = generateId();
 	const now = Math.floor(Date.now() / 1000);
 
-	await db.execute({
+	await getDb().execute({
 		sql: `INSERT INTO comments (id, user_id, product, body, parent_id, created_at)
 		      VALUES (?, ?, ?, ?, ?, ?)`,
 		args: [id, userId, product, body, parentId ?? null, now]
 	});
 
-	const userResult = await db.execute({
+	const userResult = await getDb().execute({
 		sql: 'SELECT username FROM users WHERE id = ?',
 		args: [userId]
 	});
@@ -96,7 +96,7 @@ export async function createComment(
 }
 
 export async function updateComment(commentId: string, userId: string, body: string): Promise<void> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: `UPDATE comments SET body = ?, edited_at = unixepoch()
 		      WHERE id = ? AND user_id = ? AND deleted = 0`,
 		args: [body, commentId, userId]
@@ -107,7 +107,7 @@ export async function updateComment(commentId: string, userId: string, body: str
 }
 
 export async function deleteComment(commentId: string, userId: string): Promise<void> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'UPDATE comments SET deleted = 1 WHERE id = ? AND user_id = ?',
 		args: [commentId, userId]
 	});
@@ -117,7 +117,7 @@ export async function deleteComment(commentId: string, userId: string): Promise<
 }
 
 export async function canComment(userId: string): Promise<boolean> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'SELECT 1 FROM comments WHERE user_id = ? AND created_at > (unixepoch() - 30)',
 		args: [userId]
 	});

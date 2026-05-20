@@ -1,9 +1,14 @@
 import { json } from '@sveltejs/kit';
+import Stripe from 'stripe';
 import type { RequestHandler } from './$types';
-import { stripe, isStripeConfigured } from '$lib/server/stripe';
+import { getStripe, isStripeConfigured } from '$lib/server/stripe';
 import { createLicense } from '$lib/server/licenses';
+import { env } from '$env/dynamic/private';
+
+const cryptoProvider = Stripe.createSubtleCryptoProvider();
 
 export const POST: RequestHandler = async ({ request }) => {
+	const stripe = getStripe();
 	if (!isStripeConfigured() || !stripe) {
 		return json({ error: 'Stripe not configured' }, { status: 503 });
 	}
@@ -15,14 +20,19 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ error: 'Missing signature' }, { status: 400 });
 	}
 
-	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-	if (!webhookSecret) {
+	if (!env.STRIPE_WEBHOOK_SECRET) {
 		return json({ error: 'Webhook secret not configured' }, { status: 503 });
 	}
 
 	let event;
 	try {
-		event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+		event = await stripe.webhooks.constructEventAsync(
+			body,
+			signature,
+			env.STRIPE_WEBHOOK_SECRET,
+			undefined,
+			cryptoProvider
+		);
 	} catch {
 		return json({ error: 'Invalid signature' }, { status: 400 });
 	}

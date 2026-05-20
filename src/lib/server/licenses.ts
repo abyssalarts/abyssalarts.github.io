@@ -1,5 +1,5 @@
-import { randomBytes } from 'crypto';
-import { db } from './db';
+import { generateId, generateRandomHex } from './crypto';
+import { getDb } from './db';
 
 export interface License {
 	id: string;
@@ -23,9 +23,7 @@ export interface ValidationResult {
 
 export function generateLicenseKey(product: string): string {
 	const prefix = product.toUpperCase();
-	const segments = Array.from({ length: 4 }, () =>
-		randomBytes(2).toString('hex').toUpperCase()
-	);
+	const segments = Array.from({ length: 4 }, () => generateRandomHex(2).toUpperCase());
 	return `${prefix}-${segments.join('-')}`;
 }
 
@@ -34,11 +32,11 @@ export async function createLicense(
 	product: string,
 	stripeSessionId?: string
 ): Promise<License> {
-	const id = randomBytes(8).toString('hex');
+	const id = generateId();
 	const licenseKey = generateLicenseKey(product);
 	const now = Math.floor(Date.now() / 1000);
 
-	await db.execute({
+	await getDb().execute({
 		sql: `INSERT INTO licenses (id, user_id, product, license_key, stripe_session_id, created_at)
 		      VALUES (?, ?, ?, ?, ?, ?)`,
 		args: [id, userId, product, licenseKey, stripeSessionId ?? null, now]
@@ -58,7 +56,7 @@ export async function createLicense(
 }
 
 export async function getUserLicenses(userId: string): Promise<License[]> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'SELECT * FROM licenses WHERE user_id = ? ORDER BY created_at DESC',
 		args: [userId]
 	});
@@ -69,7 +67,7 @@ export async function getUserLicenseForProduct(
 	userId: string,
 	product: string
 ): Promise<License | null> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'SELECT * FROM licenses WHERE user_id = ? AND product = ? AND revoked = 0 LIMIT 1',
 		args: [userId, product]
 	});
@@ -78,7 +76,7 @@ export async function getUserLicenseForProduct(
 }
 
 export async function validateLicenseKey(key: string): Promise<ValidationResult> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'SELECT * FROM licenses WHERE license_key = ?',
 		args: [key]
 	});
@@ -111,7 +109,7 @@ export async function validateLicenseKey(key: string): Promise<ValidationResult>
 }
 
 export async function incrementDeviceCount(key: string): Promise<void> {
-	await db.execute({
+	await getDb().execute({
 		sql: 'UPDATE licenses SET device_count = device_count + 1 WHERE license_key = ?',
 		args: [key]
 	});

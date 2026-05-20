@@ -1,13 +1,15 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { stripe, isStripeConfigured } from '$lib/server/stripe';
+import { getStripe, isStripeConfigured } from '$lib/server/stripe';
 import { getUserLicenseForProduct } from '$lib/server/licenses';
+import { env } from '$env/dynamic/private';
 
 export const POST: RequestHandler = async ({ locals, request, url }) => {
 	if (!locals.user) {
 		return json({ error: 'Authentication required' }, { status: 401 });
 	}
 
+	const stripe = getStripe();
 	if (!isStripeConfigured() || !stripe) {
 		return json({ error: 'Stripe is not configured. Payment processing unavailable.' }, { status: 503 });
 	}
@@ -24,7 +26,7 @@ export const POST: RequestHandler = async ({ locals, request, url }) => {
 		return json({ error: 'You already own a license for this product' }, { status: 409 });
 	}
 
-	const priceId = process.env.STRIPE_RIFT_PRICE_ID;
+	const priceId = env.STRIPE_RIFT_PRICE_ID;
 	if (!priceId) {
 		return json({ error: 'Product pricing not configured' }, { status: 503 });
 	}

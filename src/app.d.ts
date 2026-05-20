@@ -1,8 +1,15 @@
-/// <reference types="@sveltejs/kit" />
+/// <reference types="@sveltejs/adapter-cloudflare" />
 
 declare namespace App {
 	interface Locals {
 		user: import('lucia').User | null;
 		session: import('lucia').Session | null;
+	}
+
+	interface Platform {
+		env: Record<string, string>;
+		context: {
+			waitUntil(promise: Promise<unknown>): void;
+		};
 	}
 }

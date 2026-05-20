@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { lucia } from '$lib/server/auth';
+import { getLucia } from '$lib/server/auth';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -8,6 +8,7 @@ export const actions: Actions = {
 			redirect(302, '/');
 		}
 
+		const lucia = getLucia();
 		await lucia.invalidateSession(locals.session.id);
 
 		const sessionCookie = lucia.createBlankSessionCookie();

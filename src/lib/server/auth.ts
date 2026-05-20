@@ -1,39 +1,52 @@
 import { Lucia } from 'lucia';
 import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
 import { GitHub } from 'arctic';
-import { db } from './db';
+import { getDb } from './db';
+import { env } from '$env/dynamic/private';
 
-const adapter = new LibSQLAdapter(db, {
-	user: 'users',
-	session: 'sessions'
-});
+let _lucia: Lucia;
+let _github: GitHub;
 
-export const lucia = new Lucia(adapter, {
-	sessionCookie: {
-		attributes: {
-			secure: !import.meta.env.DEV
-		}
-	},
-	getUserAttributes: (attributes) => {
-		return {
-			username: attributes.username,
-			email: attributes.email,
-			githubId: attributes.github_id,
-			avatarUrl: attributes.avatar_url,
-			createdAt: attributes.created_at
-		};
+export function getLucia(): Lucia {
+	if (!_lucia) {
+		const adapter = new LibSQLAdapter(getDb(), {
+			user: 'users',
+			session: 'sessions'
+		});
+		_lucia = new Lucia(adapter, {
+			sessionCookie: {
+				attributes: {
+					secure: !import.meta.env.DEV
+				}
+			},
+			getUserAttributes: (attributes) => {
+				return {
+					username: attributes.username,
+					email: attributes.email,
+					githubId: attributes.github_id,
+					avatarUrl: attributes.avatar_url,
+					createdAt: attributes.created_at
+				};
+			}
+		});
 	}
-});
+	return _lucia;
+}
 
-export const github = new GitHub(
-	process.env.GITHUB_CLIENT_ID ?? '',
-	process.env.GITHUB_CLIENT_SECRET ?? '',
-	null
-);
+export function getGitHub(): GitHub {
+	if (!_github) {
+		_github = new GitHub(
+			env.GITHUB_CLIENT_ID ?? '',
+			env.GITHUB_CLIENT_SECRET ?? '',
+			null
+		);
+	}
+	return _github;
+}
 
 declare module 'lucia' {
 	interface Register {
-		Lucia: typeof lucia;
+		Lucia: ReturnType<typeof getLucia>;
 		DatabaseUserAttributes: DatabaseUserAttributes;
 	}
 }

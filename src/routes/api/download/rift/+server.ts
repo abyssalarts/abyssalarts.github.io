@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getUserLicenseForProduct } from '$lib/server/licenses';
+import { env } from '$env/dynamic/private';
 
 export const GET: RequestHandler = async ({ locals }) => {
 	if (!locals.user) {
@@ -12,8 +13,7 @@ export const GET: RequestHandler = async ({ locals }) => {
 		return json({ error: 'Valid Rift license required' }, { status: 403 });
 	}
 
-	const githubPat = process.env.GITHUB_PAT;
-	if (!githubPat) {
+	if (!env.GITHUB_PAT) {
 		return json({
 			message: 'Download proxy ready. Rift binary not yet available.',
 			license_key: license.license_key,

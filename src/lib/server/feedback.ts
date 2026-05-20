@@ -1,5 +1,5 @@
-import { randomBytes } from 'crypto';
-import { db } from './db';
+import { generateId } from './crypto';
+import { getDb } from './db';
 
 export interface Feedback {
 	id: string;
@@ -28,10 +28,10 @@ export async function createFeedback(
 		throw new Error(`Invalid type: ${type}`);
 	}
 
-	const id = randomBytes(8).toString('hex');
+	const id = generateId();
 	const now = Math.floor(Date.now() / 1000);
 
-	await db.execute({
+	await getDb().execute({
 		sql: `INSERT INTO feedback (id, user_id, product, type, body, email, created_at)
 		      VALUES (?, ?, ?, ?, ?, ?, ?)`,
 		args: [id, userId ?? null, product, type, body, email ?? null, now]
@@ -49,7 +49,7 @@ export async function createFeedback(
 }
 
 export async function canSubmitFeedback(identifier: string): Promise<boolean> {
-	const result = await db.execute({
+	const result = await getDb().execute({
 		sql: 'SELECT 1 FROM feedback WHERE (user_id = ? OR email = ?) AND created_at > (unixepoch() - 300)',
 		args: [identifier, identifier]
 	});

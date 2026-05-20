@@ -1,8 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { hash } from '@node-rs/argon2';
-import { generateIdFromEntropySize } from 'lucia';
-import { lucia } from '$lib/server/auth';
-import { db } from '$lib/server/db';
+import { getLucia } from '$lib/server/auth';
+import { getDb } from '$lib/server/db';
+import { hashPassword, generateId } from '$lib/server/crypto';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -33,17 +32,11 @@ export const actions: Actions = {
 			return fail(400, { message: 'Password must be at least 8 characters.', email, username });
 		}
 
-		const passwordHash = await hash(password, {
-			memoryCost: 19456,
-			timeCost: 2,
-			outputLen: 32,
-			parallelism: 1
-		});
-
-		const userId = generateIdFromEntropySize(10);
+		const passwordHash = await hashPassword(password);
+		const userId = generateId(10);
 
 		try {
-			await db.execute({
+			await getDb().execute({
 				sql: 'INSERT INTO users (id, email, username, hashed_password, created_at) VALUES (?, ?, ?, ?, ?)',
 				args: [userId, email.toLowerCase(), username.toLowerCase(), passwordHash, Math.floor(Date.now() / 1000)]
 			});
@@ -58,6 +51,7 @@ export const actions: Actions = {
 			return fail(400, { message: 'Email or username already taken.', email, username });
 		}
 
+		const lucia = getLucia();
 		const session = await lucia.createSession(userId, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		cookies.set(sessionCookie.name, sessionCookie.value, {
