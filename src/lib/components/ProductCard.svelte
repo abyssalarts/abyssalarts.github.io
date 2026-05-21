@@ -52,7 +52,7 @@
 
 	.product-card:hover {
 		border-color: var(--amber-dim);
-		box-shadow: 0 0 30px rgba(212, 137, 10, 0.05);
+		box-shadow: 0 0 30px var(--glow-whisper);
 	}
 
 	.product-status {

@@ -197,7 +197,7 @@
 
 	.submit-btn:hover:not(:disabled) {
 		border-color: var(--amber-dim);
-		background: rgba(212, 137, 10, 0.05);
+		background: var(--glow-whisper);
 	}
 
 	.submit-btn:disabled {

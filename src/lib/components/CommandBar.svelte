@@ -195,7 +195,7 @@
 	.command-backdrop {
 		position: fixed;
 		inset: 0;
-		background: rgba(0, 0, 0, 0.7);
+		background: var(--overlay);
 		z-index: 9000;
 		display: flex;
 		justify-content: center;

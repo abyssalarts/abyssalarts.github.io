@@ -59,8 +59,14 @@
   --text-body: #B09860;
   --red: #CC3333;
   --green: #7BA05B;
+  --glow-trace: rgba(212, 137, 10, 0.03);
+  --glow-whisper: rgba(212, 137, 10, 0.05);
+  --glow-faintest: rgba(212, 137, 10, 0.08);
+  --glow-subtle: rgba(212, 137, 10, 0.1);
   --glow: rgba(212, 137, 10, 0.15);
   --glow-strong: rgba(212, 137, 10, 0.3);
+  --bg-translucent: rgba(8, 8, 6, 0.9);
+  --overlay: rgba(0, 0, 0, 0.7);
 }
 
 /* ═══ BASE ═══ */

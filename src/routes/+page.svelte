@@ -199,7 +199,7 @@
 		color: var(--amber);
 		line-height: 1.15;
 		margin-bottom: 32px;
-		text-shadow: 0 0 30px var(--glow), 0 0 60px rgba(212, 137, 10, 0.08);
+		text-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow-faintest);
 		opacity: 0;
 		animation: fadeUp 0.8s ease-out 0.4s forwards;
 	}
@@ -241,6 +241,12 @@
 		letter-spacing: 3px;
 		text-transform: uppercase;
 		color: var(--text-secondary);
+		animation: scrollBob 2s ease-in-out infinite;
+	}
+
+	@keyframes scrollBob {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(6px); }
 	}
 
 	.scroll-line {
@@ -344,9 +350,9 @@
 	}
 
 	.hero-cta:hover {
-		background: rgba(212, 137, 10, 0.08);
+		background: var(--glow-faintest);
 		border-color: var(--amber);
-		box-shadow: 0 0 20px rgba(212, 137, 10, 0.1);
+		box-shadow: 0 0 20px var(--glow-subtle);
 	}
 
 	/* ═══ PHILOSOPHY ═══ */
@@ -429,9 +435,9 @@
 	}
 
 	.contact-email:hover {
-		background: rgba(212, 137, 10, 0.08);
+		background: var(--glow-faintest);
 		border-color: var(--amber);
-		box-shadow: 0 0 20px rgba(212, 137, 10, 0.1);
+		box-shadow: 0 0 20px var(--glow-subtle);
 	}
 
 	.contact-links {

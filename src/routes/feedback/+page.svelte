@@ -207,9 +207,9 @@
 	}
 
 	.submit-btn:hover:not(:disabled) {
-		background: rgba(212, 137, 10, 0.08);
+		background: var(--glow-faintest);
 		border-color: var(--amber);
-		box-shadow: 0 0 15px rgba(212, 137, 10, 0.1);
+		box-shadow: 0 0 15px var(--glow-subtle);
 	}
 
 	.submit-btn:disabled {

@@ -41,9 +41,7 @@
 		left: 0;
 		right: 0;
 		z-index: 9000;
-		background: rgba(8, 8, 6, 0.9);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
+		background: var(--surface);
 		border-bottom: 1px solid var(--amber-faint);
 		padding: 12px 24px;
 		display: flex;
@@ -111,7 +109,7 @@
 	}
 
 	.nav-login:hover {
-		background: rgba(212, 137, 10, 0.08);
+		background: var(--glow-faintest);
 		border-color: var(--amber);
 	}
 

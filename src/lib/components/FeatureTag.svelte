@@ -12,7 +12,7 @@
 		color: var(--amber-dim);
 		padding: 4px 10px;
 		border: 1px solid var(--amber-faint);
-		background: rgba(212, 137, 10, 0.03);
+		background: var(--glow-trace);
 		white-space: nowrap;
 	}
 </style>

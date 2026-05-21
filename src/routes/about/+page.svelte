@@ -77,6 +77,15 @@
 	</AsciiBox>
 </section>
 
+<section class="about-section closing-cta" use:reveal>
+	<p class="cta-text">See what we build</p>
+	<div class="cta-links">
+		<a href="/products/brain-dump" class="cta-link">Brain Dump &rarr;</a>
+		<a href="/products/rift" class="cta-link">Rift &rarr;</a>
+		<a href="/wiki/" class="cta-link">Wiki &rarr;</a>
+	</div>
+</section>
+
 <style>
 	.about-section {
 		margin-bottom: 16px;
@@ -150,5 +159,34 @@
 		font-size: 12px;
 		color: var(--text-secondary);
 		text-align: right;
+	}
+
+	.closing-cta {
+		text-align: center;
+		padding: 40px 0;
+	}
+
+	.cta-text {
+		font-size: 13px;
+		color: var(--text-secondary);
+		margin-bottom: 24px;
+		letter-spacing: 1px;
+	}
+
+	.cta-links {
+		display: flex;
+		justify-content: center;
+		gap: 32px;
+	}
+
+	.cta-link {
+		font-size: 13px;
+		color: var(--amber-dim);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.cta-link:hover {
+		color: var(--amber);
 	}
 </style>
