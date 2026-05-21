@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '$lib/styles/terminal.css';
 	import BootSequence from '$lib/components/BootSequence.svelte';
+	import NavBar from '$lib/components/NavBar.svelte';
 	import Breadcrumbs from '$lib/components/Breadcrumbs.svelte';
 	import DepthMeter from '$lib/components/DepthMeter.svelte';
 	import StatusBar from '$lib/components/StatusBar.svelte';
@@ -43,6 +44,7 @@
 </svelte:head>
 
 <BootSequence />
+<NavBar />
 
 <div class="terminal-shell">
 	<Breadcrumbs />

@@ -15,6 +15,7 @@
 			Built because they needed to exist.
 		</p>
 		<p class="hero-tagline">"Built from the deep end — for the ones who live there."</p>
+		<a href="#products" class="hero-cta">Explore Products</a>
 	</div>
 	<div class="scroll-hint">
 		<span>scroll</span>
@@ -25,7 +26,7 @@
 <AsciiDivider />
 
 <!-- ═══ PHILOSOPHY ═══ -->
-<section class="philosophy" use:reveal>
+<section id="philosophy" class="philosophy" use:reveal>
 	<div class="section-header" use:reveal>
 		<span class="section-marker">01</span>
 		<div class="section-line"></div>
@@ -75,7 +76,7 @@
 <AsciiDivider />
 
 <!-- ═══ PRODUCTS ═══ -->
-<section class="products" use:reveal>
+<section id="products" class="products" use:reveal>
 	<div class="section-header" use:reveal>
 		<span class="section-marker">02</span>
 		<div class="section-line"></div>
@@ -108,7 +109,7 @@
 <AsciiDivider />
 
 <!-- ═══ ABOUT TEASER ═══ -->
-<section class="about" use:reveal>
+<section id="about" class="about" use:reveal>
 	<div class="section-header" use:reveal>
 		<span class="section-marker">03</span>
 		<div class="section-line"></div>
@@ -141,7 +142,7 @@
 <AsciiDivider />
 
 <!-- ═══ CONTACT ═══ -->
-<section class="contact" use:reveal>
+<section id="contact" class="contact" use:reveal>
 	<div class="section-header section-header-center" use:reveal>
 		<span class="section-marker">04</span>
 		<div class="section-line section-line-short"></div>
@@ -301,10 +302,54 @@
 		text-shadow: 0 0 20px var(--glow);
 	}
 
-	/* ═══ PHILOSOPHY ═══ */
+	/* ═══ SECTIONS ═══ */
 	section {
 		padding: 80px 0;
+		scroll-margin-top: 48px;
 	}
+
+	.philosophy {
+		border-top: 1px solid var(--amber-dim);
+		background: var(--surface);
+	}
+
+	.products {
+		border-top: 1px solid var(--amber-dim);
+	}
+
+	.about {
+		border-top: 1px solid var(--amber-dim);
+		background: var(--surface);
+	}
+
+	.contact {
+		border-top: 1px solid var(--amber-dim);
+	}
+
+	/* ═══ HERO CTA ═══ */
+	.hero-cta {
+		display: inline-block;
+		font-size: 11px;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: var(--amber);
+		text-decoration: none;
+		padding: 12px 24px;
+		border: 1px solid var(--amber-dim);
+		margin-top: 32px;
+		transition: background 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+		text-shadow: 0 0 15px var(--glow);
+		opacity: 0;
+		animation: fadeUp 0.8s ease-out 1.0s forwards;
+	}
+
+	.hero-cta:hover {
+		background: rgba(212, 137, 10, 0.08);
+		border-color: var(--amber);
+		box-shadow: 0 0 20px rgba(212, 137, 10, 0.1);
+	}
+
+	/* ═══ PHILOSOPHY ═══ */
 
 	.principle {
 		margin-bottom: 36px;

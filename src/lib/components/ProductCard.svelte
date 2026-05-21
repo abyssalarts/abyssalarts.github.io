@@ -68,7 +68,7 @@
 
 	.status-live {
 		color: var(--green);
-		border-color: rgba(51, 204, 51, 0.3);
+		border-color: rgba(123, 160, 91, 0.3);
 	}
 
 	.status-alpha {

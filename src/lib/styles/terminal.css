@@ -58,7 +58,7 @@
   --text-secondary: #8B6914;
   --text-body: #B09860;
   --red: #CC3333;
-  --green: #33CC33;
+  --green: #7BA05B;
   --glow: rgba(212, 137, 10, 0.15);
   --glow-strong: rgba(212, 137, 10, 0.3);
 }
@@ -167,6 +167,11 @@ a {
 
 a:hover {
   color: var(--amber-bright);
+}
+
+a:focus-visible {
+  outline: 1px solid var(--amber-dim);
+  outline-offset: 4px;
 }
 
 /* ═══ ANIMATIONS ═══ */
