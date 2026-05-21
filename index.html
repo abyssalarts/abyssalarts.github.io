@@ -72,6 +72,11 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    a:focus-visible {
+      outline: 1px solid var(--amber-dim);
+      outline-offset: 4px;
+    }
+
     /* ═══ SCANLINES ═══ */
     body::after {
       content: '';
@@ -252,6 +257,33 @@
       animation: fadeUp 0.8s ease-out 0.8s forwards;
     }
 
+    .hero-cta {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      padding: var(--space-3) var(--space-6);
+      border: 1px solid var(--amber-dim);
+      margin-top: var(--space-8);
+      transition: background 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+      text-shadow: 0 0 15px var(--glow);
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 1.0s forwards;
+    }
+
+    .hero-cta:hover {
+      background: rgba(212, 137, 10, 0.08);
+      border-color: var(--amber);
+      box-shadow: 0 0 20px rgba(212, 137, 10, 0.1);
+    }
+
+    .hero-cta:focus-visible {
+      outline: 1px solid var(--amber);
+      outline-offset: 2px;
+    }
+
     .cursor-blink {
       display: inline-block;
       width: 10px;
@@ -319,7 +351,8 @@
 
     /* ═══ PHILOSOPHY ═══ */
     .philosophy {
-      border-top: 1px solid var(--amber-faint);
+      border-top: 1px solid var(--amber-dim);
+      background: var(--surface);
     }
 
     .principle {
@@ -349,7 +382,7 @@
 
     /* ═══ APPS ═══ */
     .apps {
-      border-top: 1px solid var(--amber-faint);
+      border-top: 1px solid var(--amber-dim);
     }
 
     .app-card {
@@ -423,11 +456,18 @@
       padding: 4px 10px;
       border: 1px solid var(--amber-faint);
       background: rgba(212, 137, 10, 0.03);
+      transition: border-color 0.2s ease-out, color 0.2s ease-out;
+    }
+
+    .feature-tag:hover {
+      border-color: var(--amber-dim);
+      color: var(--amber);
     }
 
     /* ═══ ABOUT ═══ */
     .about {
-      border-top: 1px solid var(--amber-faint);
+      border-top: 1px solid var(--amber-dim);
+      background: var(--surface);
     }
 
     .about-text {
@@ -445,7 +485,7 @@
 
     /* ═══ CONTACT ═══ */
     .contact {
-      border-top: 1px solid var(--amber-faint);
+      border-top: 1px solid var(--amber-dim);
       text-align: center;
       padding-bottom: var(--space-30);
     }
@@ -473,6 +513,11 @@
       box-shadow: 0 0 20px rgba(212, 137, 10, 0.1);
     }
 
+    .contact-email:focus-visible {
+      outline: 1px solid var(--amber);
+      outline-offset: 2px;
+    }
+
     .contact-links {
       margin-top: 32px;
       display: flex;
@@ -491,6 +536,11 @@
 
     .contact-link:hover {
       color: var(--amber-dim);
+    }
+
+    .contact-link:focus-visible {
+      outline: 1px solid var(--amber-dim);
+      outline-offset: 4px;
     }
 
     /* ═══ FOOTER ═══ */
@@ -557,6 +607,28 @@
     }
 
     /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .container {
+        max-width: 90%;
+      }
+
+      section {
+        padding: var(--space-15) 0;
+      }
+
+      .hero-title {
+        font-size: clamp(28px, 5vw, 42px);
+      }
+
+      .hero-sub {
+        font-size: 14px;
+      }
+
+      .contact-links {
+        gap: var(--space-6);
+      }
+    }
+
     @media (max-width: 600px) {
       .nav-links .nav-separator {
         display: none;
@@ -619,6 +691,7 @@
       <p class="hero-sub">Privacy-first Android apps and developer tools. No ads. No subscriptions. No data harvesting.
         Built because they needed to exist.</p>
       <p class="hero-tagline">"Built from the deep end — for the ones who live there."</p>
+      <a href="#products" class="hero-cta">Explore Products</a>
     </div>
     <div class="scroll-hint">
       <span>scroll</span>
