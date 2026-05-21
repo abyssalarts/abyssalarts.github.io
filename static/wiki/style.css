@@ -1,0 +1,171 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fafafa;
+  --bg-alt: #f0f0f0;
+  --text: #1a1a1a;
+  --text-muted: #555;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --border: #e2e2e2;
+  --tag-bg: #e8f0fe;
+  --tag-text: #1e40af;
+  --radius: 6px;
+  --max-width: 720px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111;
+    --bg-alt: #1a1a1a;
+    --text: #e8e8e8;
+    --text-muted: #999;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --border: #2a2a2a;
+    --tag-bg: #1e293b;
+    --tag-text: #93c5fd;
+  }
+}
+
+html { font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-home {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nav-home:hover { text-decoration: underline; }
+.nav-sep { color: var(--text-muted); }
+.nav-domain { color: var(--text-muted); text-transform: capitalize; }
+
+main {
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.page-header { margin-bottom: 32px; }
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.summary {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.content h1, .content h2, .content h3,
+.content h4, .content h5, .content h6 {
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.content h2 { font-size: 1.5rem; }
+.content h3 { font-size: 1.25rem; }
+.content p { margin-bottom: 1em; }
+.content a { color: var(--accent); text-decoration: none; }
+.content a:hover { text-decoration: underline; }
+.content ul, .content ol { margin-bottom: 1em; padding-left: 1.5em; }
+.content li { margin-bottom: 0.3em; }
+.content blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.content code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  background: var(--bg-alt);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+.content pre {
+  background: var(--bg-alt);
+  padding: 16px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1em 0;
+  border: 1px solid var(--border);
+}
+.content pre code { background: none; padding: 0; }
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+.content th, .content td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.content th { background: var(--bg-alt); font-weight: 600; }
+.content img { max-width: 100%; height: auto; border-radius: var(--radius); }
+.content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+.index-page { }
+.index-header { margin-bottom: 40px; }
+.index-header h1 { font-size: 2.5rem; font-weight: 700; }
+.index-subtitle { color: var(--text-muted); font-size: 1.1rem; margin-top: 8px; }
+.domain-section { margin-bottom: 32px; }
+.domain-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.domain-section ul { list-style: none; padding: 0; }
+.domain-section li { padding: 6px 0; }
+.domain-section a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.domain-section a:hover { text-decoration: underline; }
+.page-summary { color: var(--text-muted); font-size: 0.9rem; }
+
+.footer {
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+.footer a { color: var(--accent); text-decoration: none; }
