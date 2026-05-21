@@ -9,6 +9,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	return {
 		title: 'Account',
+		description: 'Your Abyssal Arts account dashboard. View licenses, downloads, and account activity.',
 		user: locals.user,
 		licenses
 	};

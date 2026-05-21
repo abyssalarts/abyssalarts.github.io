@@ -5,7 +5,11 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) redirect(302, '/auth/login');
-	return { title: 'Settings', user: locals.user };
+	return {
+		title: 'Settings',
+		description: 'Manage your Abyssal Arts account settings.',
+		user: locals.user
+	};
 };
 
 export const actions: Actions = {

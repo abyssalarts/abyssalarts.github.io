@@ -19,6 +19,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	return {
 		title: 'Rift',
+		description: 'A terminal-aesthetic development environment built on Rust, Tauri, and Svelte. Claude Code integration, modular pane system, skills marketplace.',
 		isAuthenticated: !!user,
 		hasLicense,
 		licenseKey,

@@ -5,7 +5,7 @@ Guidance for Claude Code when working in this repository.
 ## Project Overview
 
 SvelteKit terminal-experience website for Abyssal Arts -- a solo indie Android dev studio.
-Domain: abyssal-arts.com. Deployment target: Fly.io (adapter-node). Phases 1-4 complete. Phase 5 (Fly.io deploy + DNS cutover) remaining.
+Domain: abyssal-arts.com. Deployment target: Cloudflare Pages (adapter-cloudflare). Phases 1-5 complete.
 
 The design vision is "a terminal that happens to be a website" -- behaviorally terminal-like,
 not just themed. Working command bar, boot sequence, depth meter, ambient status bar.
@@ -121,4 +121,4 @@ Phases 1-4 complete. See `docs/Website-Rebuild-Plan.md` for full plan.
 - Phase 3: Stripe Checkout, webhook, license key generation + validation, download proxy
 - Phase 4: Terminal-styled comments (threaded), structured feedback form + API
 
-Phase 5 next: Fly.io deployment, Turso production DB, Stripe live keys, Cloudflare DNS cutover, production smoke test.
+Phase 5 complete: Cloudflare Pages deployment with adapter-cloudflare, wrangler.jsonc config, design quality passes.

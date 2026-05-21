@@ -3,7 +3,10 @@ import { fail } from '@sveltejs/kit';
 import { createFeedback, canSubmitFeedback } from '$lib/server/feedback';
 
 export const load: PageServerLoad = async () => {
-	return { title: 'Feedback' };
+	return {
+		title: 'Feedback',
+		description: 'Send feedback to Abyssal Arts. Report bugs, request features, or share your thoughts about our products.'
+	};
 };
 
 export const actions: Actions = {

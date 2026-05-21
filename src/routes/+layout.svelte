@@ -9,10 +9,37 @@
 	import type { Snippet } from 'svelte';
 
 	let { children }: { children: Snippet } = $props();
+
+	const DEFAULT_DESCRIPTION = 'Privacy-first Android apps and developer tools. No ads. No subscriptions. No data harvesting. Built because they needed to exist.';
+	const OG_IMAGE = 'https://abyssal-arts.com/og-image.png';
+
+	let pageTitle = $derived(
+		$page.data?.title && $page.data.title !== 'Home'
+			? `Abyssal Arts — ${$page.data.title}`
+			: 'Abyssal Arts'
+	);
+	let description = $derived($page.data?.description || DEFAULT_DESCRIPTION);
+	let canonicalUrl = $derived(`https://abyssal-arts.com${$page.url.pathname}`);
 </script>
 
 <svelte:head>
-	<title>Abyssal Arts{$page.data?.title ? ` — ${$page.data.title}` : ''}</title>
+	<title>{pageTitle}</title>
+	<meta name="description" content={description} />
+	<link rel="canonical" href={canonicalUrl} />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Abyssal Arts" />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:image" content={OG_IMAGE} />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageTitle} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={OG_IMAGE} />
 </svelte:head>
 
 <BootSequence />
