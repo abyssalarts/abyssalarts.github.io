@@ -8,11 +8,16 @@
   <meta name="description"
     content="Privacy-first Android apps and developer tools. No ads. No subscriptions. No data harvesting. Built because they needed to exist.">
   <meta name="theme-color" content="#080806">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal;
+      font-weight: 300 700;
+      font-display: swap;
+      src: url(fonts/JetBrainsMono-latin.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
     *,
     *::before,
     *::after {
@@ -34,9 +39,24 @@
       --text-secondary: #8B6914;
       --text-body: #B09860;
       --red: #CC3333;
-      --green: #33CC33;
+      --green: #7BA05B;
       --glow: rgba(212, 137, 10, 0.15);
       --glow-strong: rgba(212, 137, 10, 0.3);
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-7: 28px;
+      --space-8: 32px;
+      --space-9: 36px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-15: 60px;
+      --space-20: 80px;
+      --space-30: 120px;
     }
 
     html {
@@ -84,15 +104,103 @@
           rgba(0, 0, 0, 0.4) 100%);
     }
 
+    /* ═══ NAV ═══ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9000;
+      background: rgba(8, 8, 6, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--amber-faint);
+      padding: var(--space-3) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      transform: translateY(-100%);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+
+    .nav.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-brand {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber);
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px var(--glow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .nav-link {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s ease-out;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--amber);
+    }
+
+    .nav-link:focus-visible {
+      outline: 1px solid var(--amber-dim);
+      outline-offset: 4px;
+    }
+
+    .nav-separator {
+      color: var(--amber-faint);
+      font-size: 11px;
+      user-select: none;
+    }
+
+    .nav-login {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid var(--amber-dim);
+      transition: background 0.2s ease-out, border-color 0.2s ease-out;
+    }
+
+    .nav-login:hover {
+      background: rgba(212, 137, 10, 0.08);
+      border-color: var(--amber);
+    }
+
+    .nav-login:focus-visible {
+      outline: 1px solid var(--amber);
+      outline-offset: 2px;
+    }
+
     /* ═══ LAYOUT ═══ */
     .container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--space-6);
     }
 
     section {
-      padding: 80px 0;
+      padding: var(--space-20) 0;
+      scroll-margin-top: 48px;
     }
 
     /* ═══ HERO ═══ */
@@ -109,7 +217,7 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--text-secondary);
-      margin-bottom: 24px;
+      margin-bottom: var(--space-6);
       opacity: 0;
       animation: fadeUp 0.8s ease-out 0.2s forwards;
     }
@@ -119,7 +227,7 @@
       font-weight: 700;
       color: var(--amber);
       line-height: 1.15;
-      margin-bottom: 32px;
+      margin-bottom: var(--space-8);
       text-shadow: 0 0 30px var(--glow), 0 0 60px rgba(212, 137, 10, 0.08);
       opacity: 0;
       animation: fadeUp 0.8s ease-out 0.4s forwards;
@@ -130,7 +238,7 @@
       font-weight: 300;
       color: var(--text-body);
       max-width: 520px;
-      margin-bottom: 48px;
+      margin-bottom: var(--space-12);
       opacity: 0;
       animation: fadeUp 0.8s ease-out 0.6s forwards;
     }
@@ -185,8 +293,8 @@
     .section-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 40px;
+      gap: var(--space-4);
+      margin-bottom: var(--space-10);
     }
 
     .section-marker {
@@ -215,8 +323,8 @@
     }
 
     .principle {
-      margin-bottom: 36px;
-      padding-left: 20px;
+      margin-bottom: var(--space-9);
+      padding-left: var(--space-5);
       border-left: 2px solid var(--amber-faint);
       transition: border-color 0.3s ease;
     }
@@ -247,8 +355,8 @@
     .app-card {
       background: var(--surface);
       border: 1px solid var(--amber-faint);
-      padding: 32px;
-      margin-bottom: 24px;
+      padding: var(--space-8);
+      margin-bottom: var(--space-6);
       position: relative;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -271,7 +379,7 @@
 
     .status-live {
       color: var(--green);
-      border-color: rgba(51, 204, 51, 0.3);
+      border-color: rgba(123, 160, 91, 0.3);
     }
 
     .status-alpha {
@@ -339,7 +447,7 @@
     .contact {
       border-top: 1px solid var(--amber-faint);
       text-align: center;
-      padding-bottom: 120px;
+      padding-bottom: var(--space-30);
     }
 
     .contact-prompt {
@@ -388,7 +496,7 @@
     /* ═══ FOOTER ═══ */
     footer {
       text-align: center;
-      padding: 40px 24px;
+      padding: var(--space-10) var(--space-6);
       border-top: 1px solid var(--amber-faint);
     }
 
@@ -450,12 +558,25 @@
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 600px) {
+      .nav-links .nav-separator {
+        display: none;
+      }
+
+      .nav-links {
+        gap: var(--space-4);
+      }
+
+      .nav-brand {
+        font-size: 10px;
+        letter-spacing: 1px;
+      }
+
       section {
-        padding: 60px 0;
+        padding: var(--space-15) 0;
       }
 
       .app-card {
-        padding: 24px;
+        padding: var(--space-6);
       }
 
       .app-status {
@@ -474,6 +595,22 @@
 
 <body>
 
+  <!-- ═══ NAV ═══ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a href="#" class="nav-brand">Abyssal Arts</a>
+    <div class="nav-links">
+      <a href="#philosophy" class="nav-link">Philosophy</a>
+      <span class="nav-separator">|</span>
+      <a href="#products" class="nav-link">Products</a>
+      <span class="nav-separator">|</span>
+      <a href="#about" class="nav-link">About</a>
+      <span class="nav-separator">|</span>
+      <a href="#contact" class="nav-link">Contact</a>
+      <span class="nav-separator">|</span>
+      <a href="/login" class="nav-login">Login</a>
+    </div>
+  </nav>
+
   <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="container">
@@ -490,7 +627,7 @@
   </section>
 
   <!-- ═══ PHILOSOPHY ═══ -->
-  <section class="philosophy">
+  <section id="philosophy" class="philosophy">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-marker">01</span>
@@ -531,7 +668,7 @@
   </section>
 
   <!-- ═══ APPS ═══ -->
-  <section class="apps">
+  <section id="products" class="apps">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-marker">02</span>
@@ -575,7 +712,7 @@
   </section>
 
   <!-- ═══ ABOUT ═══ -->
-  <section class="about">
+  <section id="about" class="about">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-marker">03</span>
@@ -597,7 +734,7 @@
   </section>
 
   <!-- ═══ CONTACT ═══ -->
-  <section class="contact">
+  <section id="contact" class="contact">
     <div class="container">
       <div class="section-header reveal" style="justify-content: center;">
         <span class="section-marker">04</span>
@@ -638,6 +775,28 @@
     });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const nav = document.querySelector('.nav');
+    const hero = document.querySelector('.hero');
+
+    const navObserver = new IntersectionObserver(([entry]) => {
+      nav.classList.toggle('visible', !entry.isIntersecting);
+    }, { threshold: 0 });
+
+    navObserver.observe(hero);
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
   </script>
 
 </body>
