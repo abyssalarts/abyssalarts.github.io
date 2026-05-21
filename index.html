@@ -386,12 +386,15 @@
     }
 
     .app-card {
+      display: block;
       background: var(--surface);
       border: 1px solid var(--amber-faint);
       padding: var(--space-8);
       margin-bottom: var(--space-6);
       position: relative;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
 
     .app-card:hover {
@@ -417,6 +420,11 @@
 
     .status-alpha {
       color: var(--amber);
+      border-color: var(--amber-faint);
+    }
+
+    .status-dev {
+      color: var(--amber-dim);
       border-color: var(--amber-faint);
     }
 
@@ -679,6 +687,8 @@
       <span class="nav-separator">|</span>
       <a href="#contact" class="nav-link">Contact</a>
       <span class="nav-separator">|</span>
+      <a href="/wiki/" class="nav-link">Wiki</a>
+      <span class="nav-separator">|</span>
       <a href="/login" class="nav-login">Login</a>
     </div>
   </nav>
@@ -749,7 +759,7 @@
         <h2 class="section-title">Products</h2>
       </div>
 
-      <div class="app-card reveal">
+      <a href="/products/brain-dump" class="app-card reveal">
         <span class="app-status status-live">Live</span>
         <div class="app-name">Brain Dump</div>
         <div class="app-price">$4.99 — one-time purchase</div>
@@ -764,23 +774,22 @@
           <span class="feature-tag">Offline-First</span>
           <span class="feature-tag">Privacy-First</span>
         </div>
-      </div>
+      </a>
 
-      <div class="app-card reveal">
-        <span class="app-status status-alpha">Alpha</span>
-        <div class="app-name">Anchor</div>
-        <div class="app-price">Free — coming soon</div>
-        <p class="app-description">A wellness companion designed for neurodivergent users. Grounding tools, sensory
-          fidgets, breathing exercises, and interval reminders. No toxic positivity. No streaks. No guilt. Just tools
-          that actually help when things get loud.</p>
+      <a href="/products/rift" class="app-card reveal">
+        <span class="app-status status-dev">Dev</span>
+        <div class="app-name">Rift</div>
+        <div class="app-price">Coming soon</div>
+        <p class="app-description">A terminal-aesthetic development environment built on Rust, Tauri, and Svelte.
+          Claude Code integration, modular pane system, skills marketplace. The IDE that improves itself.</p>
         <div class="app-features">
-          <span class="feature-tag">Grounding Tools</span>
-          <span class="feature-tag">Sensory Fidgets</span>
-          <span class="feature-tag">Breathing Exercises</span>
-          <span class="feature-tag">Interval Reminders</span>
-          <span class="feature-tag">No Accounts</span>
+          <span class="feature-tag">Terminal Aesthetic</span>
+          <span class="feature-tag">Claude Code Integration</span>
+          <span class="feature-tag">Pane System</span>
+          <span class="feature-tag">Skills Marketplace</span>
+          <span class="feature-tag">Self-Healing Hooks</span>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
@@ -850,13 +859,10 @@
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     const nav = document.querySelector('.nav');
-    const hero = document.querySelector('.hero');
 
-    const navObserver = new IntersectionObserver(([entry]) => {
-      nav.classList.toggle('visible', !entry.isIntersecting);
-    }, { threshold: 0 });
-
-    navObserver.observe(hero);
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('visible', window.scrollY > 80);
+    }, { passive: true });
 
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', e => {
