@@ -9,34 +9,6 @@
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
-	let purchasing = $state(false);
-	let error = $state('');
-
-	async function buyRift() {
-		purchasing = true;
-		error = '';
-		try {
-			const res = await fetch('/api/stripe/checkout', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ product: 'rift' })
-			});
-			const json = await res.json();
-			if (!res.ok) {
-				error = json.error || 'Checkout failed';
-				return;
-			}
-			if (json.url) {
-				window.location.href = json.url;
-				return;
-			}
-			error = 'No checkout URL returned';
-		} catch {
-			error = 'Network error — try again';
-		} finally {
-			purchasing = false;
-		}
-	}
 </script>
 
 <div class="man-page">
@@ -44,7 +16,7 @@
 		name="RIFT"
 		section="1"
 		manual="Abyssal Arts Manual"
-		description="terminal-aesthetic development environment"
+		description="a terminal that sees what your agents do"
 	/>
 
 	<div class="man-section" use:reveal>
@@ -58,31 +30,30 @@
 		<h2 class="man-section-title">DESCRIPTION</h2>
 		<div class="man-body">
 			<p>
-				Rift is not another Electron wrapper with a dark theme bolted on. It's a
-				terminal-native development environment built from scratch in Rust and Tauri,
-				with a Svelte 5 frontend that actually belongs there.
+				Most terminals show you text. Rift shows you what's happening — which agent
+				touched which file, what hooks fired, where errors clustered, and how your
+				filesystem changed over time. It's a terminal and an observability cockpit
+				in one window.
 			</p>
 			<p>
-				The backend is Rust. Not "Rust for the hot path and JavaScript for everything
-				else" — Rust. The terminal surface, the process management, the IPC layer, the
-				hook system. Native performance because the language delivers it, not because
-				someone optimized around a runtime that shouldn't be there.
+				Built from scratch in Rust and Tauri with a Svelte 5 frontend. The terminal
+				surface, process management, IPC layer, and event bus are all Rust. Not a
+				wrapper — Rift owns the PTY.
 			</p>
 			<p>
-				Claude Code integration is built into the workflow. Not a chat sidebar grafted
-				onto an editor — a first-class citizen with session management, skills dispatch,
-				and an agent observation layer that shows you what the AI is actually doing.
+				Every line of terminal output is classified into color-coded lanes: Claude,
+				Agent, Hook, Aegis, OK, Warn, Err, Sys. Eight lanes, eight colors. You never
+				squint at monochrome text to figure out who said what.
 			</p>
 			<p>
-				The pane system is modular. Split, pop out to a separate window, rearrange,
-				save layouts. Your workspace reflects how you think, not how the IDE designer
-				thought you should think.
+				The cockpit shows notification tabs with real-time badges — errors, hooks,
+				agents, filesystem activity, git state, MCP tool traffic. Click a tab to
+				inspect. Drag it to a side pane. Pop it out to a second monitor.
 			</p>
 			<p>
-				A skills marketplace lets the community extend the IDE. Install tools, share
-				configurations, build on each other's work. Self-healing hooks watch your code
-				quality and learn from your patterns — enforcement that adapts instead of
-				annoying.
+				AI integration is decoupled by design. Rift's core never speaks directly to
+				any AI provider. Translators map external interfaces to Rift's internal event
+				protocol. The cockpit works standalone and gets richer as integrations connect.
 			</p>
 		</div>
 	</div>
@@ -91,28 +62,28 @@
 		<h2 class="man-section-title">OPTIONS</h2>
 		<div class="man-body">
 			<div class="man-option">
-				<span class="man-option-flag">--performance</span>
-				<span>Native Rust backend. No Electron. No compromise. (default: fast)</span>
+				<span class="man-option-flag">--lanes</span>
+				<span>Color-coded output lanes. 8 lane types — every line tagged by source at a glance.</span>
 			</div>
 			<div class="man-option">
-				<span class="man-option-flag">--ai</span>
-				<span>Claude Code integration built-in, not bolted on. Sessions, skills, agent observability.</span>
+				<span class="man-option-flag">--cockpit</span>
+				<span>Live notification tabs with event streams, sparklines, and filesystem activity tree.</span>
 			</div>
 			<div class="man-option">
-				<span class="man-option-flag">--panes LAYOUT</span>
-				<span>Modular split panes with pop-out and multi-window support.</span>
+				<span class="man-option-flag">--bus</span>
+				<span>Tokio broadcast event bus. 10K+ msg/s. External tools subscribe via IPC.</span>
 			</div>
 			<div class="man-option">
-				<span class="man-option-flag">--marketplace</span>
-				<span>Community skills marketplace. Install, share, extend.</span>
+				<span class="man-option-flag">--mcp</span>
+				<span>20 MCP tools for programmatic access — bus history, PTY I/O, git, DOM, screenshots.</span>
 			</div>
 			<div class="man-option">
-				<span class="man-option-flag">--hooks</span>
-				<span>Self-healing hooks. Code quality enforcement that learns your patterns.</span>
+				<span class="man-option-flag">--integrations</span>
+				<span>Provider-agnostic. Aegis, Index, and custom translators plug in via Section 9 boundary.</span>
 			</div>
 			<div class="man-option">
 				<span class="man-option-flag">--status</span>
-				<span>Pre-alpha. Building in public. Shipping when it's ready, not when it's scheduled.</span>
+				<span>v1.0 — open source (MIT). Cross-platform: Windows, macOS, Linux.</span>
 			</div>
 		</div>
 	</div>
@@ -121,66 +92,35 @@
 
 	<div class="features-section" use:reveal>
 		<div class="features-row">
-			<FeatureTag label="Terminal Aesthetic" />
-			<FeatureTag label="Rust + Tauri" />
-			<FeatureTag label="Claude Code" />
-			<FeatureTag label="Pane System" />
-			<FeatureTag label="Skills Marketplace" />
-			<FeatureTag label="Self-Healing Hooks" />
+			<FeatureTag label="Color-Coded Lanes" />
+			<FeatureTag label="Rust + Tauri 2" />
+			<FeatureTag label="Event Bus" />
+			<FeatureTag label="20 MCP Tools" />
+			<FeatureTag label="Cockpit" />
+			<FeatureTag label="Open Source" />
 		</div>
 	</div>
 
 	<div class="cta-section" use:reveal>
-		{#if data.hasLicense}
-			<AsciiBox title="LICENSE ACTIVE">
-				<div class="cta-command">
-					<span class="cta-prompt">$</span> license --status
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> <span class="license-key">{data.licenseKey}</span>
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> status: <span class="status-active">active</span>
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> <a href="/account" class="cta-link">view in account &rarr;</a>
-				</div>
-			</AsciiBox>
-		{:else if data.isAuthenticated}
-			<AsciiBox title="PURCHASE">
-				<div class="cta-command">
-					<span class="cta-prompt">$</span> buy rift
-				</div>
-				{#if error}
-					<div class="cta-response cta-error">
-						<span class="cta-chevron">&gt;</span> {error}
-					</div>
-				{/if}
-				<div class="cta-buy-row">
-					<button class="buy-btn" onclick={buyRift} disabled={purchasing}>
-						{purchasing ? '> processing...' : '> BUY NOW'}
-					</button>
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> one-time purchase. 3-device license.
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> validate once, works offline forever.
-				</div>
-			</AsciiBox>
-		{:else}
-			<AsciiBox title="PURCHASE">
-				<div class="cta-command">
-					<span class="cta-prompt">$</span> buy rift
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> authentication required
-				</div>
-				<div class="cta-response">
-					<span class="cta-chevron">&gt;</span> <a href="/auth/login" class="cta-link">login to purchase &rarr;</a>
-				</div>
-			</AsciiBox>
-		{/if}
+		<AsciiBox title="DOWNLOAD">
+			<div class="cta-command">
+				<span class="cta-prompt">$</span> install rift
+			</div>
+			<div class="cta-buy-row">
+				<a class="buy-btn" href="https://github.com/Critek-creator/Rift_TerminalV2/releases/latest">
+					> DOWNLOAD v1.0
+				</a>
+			</div>
+			<div class="cta-response">
+				<span class="cta-chevron">&gt;</span> free. open source (MIT). Windows / macOS / Linux.
+			</div>
+			<div class="cta-response">
+				<span class="cta-chevron">&gt;</span> <a href="https://github.com/Critek-creator/Rift_TerminalV2" class="cta-link">view source on GitHub &rarr;</a>
+			</div>
+			<div class="cta-response">
+				<span class="cta-chevron">&gt;</span> <a href="https://www.patreon.com/AbyssalArts" class="cta-link">support development on Patreon &rarr;</a>
+			</div>
+		</AsciiBox>
 	</div>
 
 	<div class="man-section" use:reveal>
