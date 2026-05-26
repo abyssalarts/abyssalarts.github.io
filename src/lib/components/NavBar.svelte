@@ -25,6 +25,8 @@
 			<span class="nav-separator">|</span>
 			<a href="/products/rift" class="nav-link">Rift</a>
 			<span class="nav-separator">|</span>
+			<a href="https://vault.abyssal-arts.com" class="nav-link">The Vault</a>
+			<span class="nav-separator">|</span>
 			<a href="/about" class="nav-link">About</a>
 			<span class="nav-separator">|</span>
 		{/if}

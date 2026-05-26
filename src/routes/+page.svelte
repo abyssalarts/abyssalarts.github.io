@@ -104,6 +104,17 @@
 			href="/products/rift"
 		/>
 	</div>
+
+	<div use:reveal>
+		<ProductCard
+			name="The Vault"
+			price="Free — open platform"
+			status="alpha"
+			description="A collective memory verification platform. Crowdsourced claims with evidence tiers, community verification, and an immutable record of things the world keeps quietly changing. Let's see them try."
+			features={['Evidence Tiers', 'Community Verification', 'Mandela Effects', 'Declassified Records', 'Pseudonymous']}
+			href="https://vault.abyssal-arts.com"
+		/>
+	</div>
 </section>
 
 <AsciiDivider />
