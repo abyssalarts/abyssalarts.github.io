@@ -126,12 +126,34 @@
 		}
 
 		.nav-links {
-			gap: 16px;
+			gap: 12px;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+		}
+
+		.nav-link {
+			font-size: 10px;
+			letter-spacing: 1px;
 		}
 
 		.nav-brand {
 			font-size: 10px;
 			letter-spacing: 1px;
+		}
+
+		.nav-login {
+			font-size: 10px;
+			padding: 3px 10px;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.nav-links {
+			gap: 8px;
+		}
+
+		.nav-link {
+			font-size: 9px;
 		}
 	}
 </style>

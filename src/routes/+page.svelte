@@ -170,13 +170,28 @@
 	<div class="contact-links" use:reveal>
 		<a href="https://github.com/abyssalarts" class="contact-link" target="_blank" rel="noopener">GitHub</a>
 		<a href="https://play.google.com/store/apps/dev?id=4852489077865221589" class="contact-link" target="_blank" rel="noopener">Play Store</a>
+		<a href="https://www.patreon.com/cw/AbyssalArtsDev" class="contact-link" target="_blank" rel="noopener">Patreon</a>
 	</div>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
+	<nav class="footer-nav" aria-label="Footer navigation">
+		<a href="/products/brain-dump" class="footer-link">Brain Dump</a>
+		<span class="footer-sep">|</span>
+		<a href="/products/rift" class="footer-link">Rift</a>
+		<span class="footer-sep">|</span>
+		<a href="https://vault.abyssal-arts.com" class="footer-link" target="_blank" rel="noopener">The Vault</a>
+		<span class="footer-sep">|</span>
+		<a href="/about" class="footer-link">About</a>
+		<span class="footer-sep">|</span>
+		<a href="/feedback" class="footer-link">Feedback</a>
+		<span class="footer-sep">|</span>
+		<a href="/privacy" class="footer-link">Privacy</a>
+	</nav>
 	<div class="footer-text">&copy; 2026 Abyssal Arts</div>
 	<div class="footer-tagline">"Built from the deep end — for the ones who live there."</div>
+	<div class="footer-exit">$ exit 0</div>
 </footer>
 
 <style>
@@ -425,7 +440,7 @@
 	/* ═══ CONTACT ═══ */
 	.contact {
 		text-align: center;
-		padding-bottom: 120px;
+		padding: 60px 0 80px;
 	}
 
 	.contact-prompt {
@@ -455,7 +470,7 @@
 		margin-top: 32px;
 		display: flex;
 		justify-content: center;
-		gap: 32px;
+		gap: 24px;
 	}
 
 	.contact-link {
@@ -464,18 +479,49 @@
 		text-transform: uppercase;
 		color: var(--text-secondary);
 		text-decoration: none;
-		transition: color 0.3s ease;
+		padding: 6px 16px;
+		border: 1px solid var(--amber-faint);
+		transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 	}
 
 	.contact-link:hover {
-		color: var(--amber-dim);
+		color: var(--amber);
+		border-color: var(--amber-dim);
+		background: var(--glow-faintest);
 	}
 
 	/* ═══ FOOTER ═══ */
 	footer {
 		text-align: center;
-		padding: 40px 24px;
+		padding: 32px 24px 40px;
 		border-top: 1px solid var(--amber-faint);
+	}
+
+	.footer-nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+		margin-bottom: 24px;
+	}
+
+	.footer-link {
+		font-size: 11px;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		color: var(--text-secondary);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.footer-link:hover {
+		color: var(--amber-dim);
+	}
+
+	.footer-sep {
+		color: var(--amber-faint);
+		font-size: 11px;
+		user-select: none;
 	}
 
 	.footer-text {
@@ -491,15 +537,45 @@
 		margin-top: 8px;
 	}
 
+	.footer-exit {
+		font-size: 10px;
+		color: var(--amber-faint);
+		margin-top: 16px;
+		letter-spacing: 1px;
+	}
+
 	/* ═══ RESPONSIVE ═══ */
 	@media (max-width: 600px) {
 		section {
 			padding: 60px 0;
 		}
 
+		.contact {
+			padding: 48px 0 60px;
+		}
+
 		.contact-links {
 			flex-direction: column;
-			gap: 16px;
+			gap: 12px;
+			align-items: center;
+		}
+
+		.contact-link {
+			min-width: 160px;
+			text-align: center;
+		}
+
+		.footer-nav {
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.footer-sep {
+			display: none;
+		}
+
+		.footer-link {
+			font-size: 10px;
 		}
 	}
 </style>

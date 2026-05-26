@@ -25,7 +25,7 @@
 	};
 </script>
 
-<a {href} class="product-card">
+<a {href} class="product-card card-{status}">
 	<span class="product-status status-{status}">{statusLabels[status]}</span>
 	<div class="product-name">{name}</div>
 	<div class="product-price">{price}</div>
@@ -42,6 +42,7 @@
 		display: block;
 		background: var(--surface);
 		border: 1px solid var(--amber-faint);
+		border-left: 3px solid var(--amber-faint);
 		padding: 32px;
 		margin-bottom: 24px;
 		position: relative;
@@ -53,6 +54,22 @@
 	.product-card:hover {
 		border-color: var(--amber-dim);
 		box-shadow: 0 0 30px var(--glow-whisper);
+	}
+
+	.card-live {
+		border-left-color: var(--green);
+	}
+
+	.card-live:hover {
+		box-shadow: 0 0 30px rgba(123, 160, 91, 0.08);
+	}
+
+	.card-alpha {
+		border-left-color: var(--amber-dim);
+	}
+
+	.card-dev {
+		border-left-color: var(--amber-faint);
 	}
 
 	.product-status {

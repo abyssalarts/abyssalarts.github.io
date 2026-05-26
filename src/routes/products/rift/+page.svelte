@@ -118,7 +118,7 @@
 				<span class="cta-chevron">&gt;</span> <a href="https://github.com/Critek-creator/Rift_TerminalV2" class="cta-link">view source on GitHub &rarr;</a>
 			</div>
 			<div class="cta-response">
-				<span class="cta-chevron">&gt;</span> <a href="https://www.patreon.com/AbyssalArts" class="cta-link">support development on Patreon &rarr;</a>
+				<span class="cta-chevron">&gt;</span> <a href="https://www.patreon.com/cw/AbyssalArtsDev" class="cta-link">support development on Patreon &rarr;</a>
 			</div>
 		</AsciiBox>
 	</div>
