@@ -147,28 +147,42 @@ a:hover { text-decoration: underline; }
 <header>
   <div class="brand">ABYSSAL ARTS</div>
   <h1>BRAIN DUMP</h1>
-  <div class="updated">PRIVACY POLICY &nbsp;—&nbsp; LAST UPDATED: APRIL 2026</div>
+  <div class="updated">PRIVACY POLICY &nbsp;—&nbsp; LAST UPDATED: MAY 2026</div>
 </header>
 
 <section>
   <div class="section-label">OVERVIEW</div>
   <div class="terminal-box">
-    <p>Brain Dump was built on a simple principle: <span class="highlight">your thoughts belong to you.</span> We collect nothing, share nothing, and store everything locally on your device. This is the shortest honest privacy policy in the app store.</p>
+    <p>Brain Dump was built on a simple principle: <span class="highlight">your thoughts belong to you.</span> Your thoughts are stored only on your device and are never sent anywhere except the AI provider you choose. The one thing we collect &mdash; only if you allow it &mdash; is <span class="highlight">anonymous usage counts</span> (which screens and buttons get used, never your thoughts) to help us improve the app.</p>
   </div>
 </section>
 
 <section>
   <div class="section-label">WHAT WE COLLECT</div>
-  <h2>Nothing.</h2>
-  <p>Brain Dump does not collect any personal information, usage data, analytics, or telemetry of any kind.</p>
+  <h2>Almost nothing &mdash; and never your thoughts.</h2>
+  <p>Your thoughts, voice, transcriptions, and API keys are <span class="highlight">never collected or transmitted by us</span>. The only thing we collect is anonymous usage analytics, and only if you allow it (see Analytics, below).</p>
   <ul class="check-list">
-    <li><span class="cross">✕</span> No personal information</li>
-    <li><span class="cross">✕</span> No usage analytics</li>
+    <li><span class="cross">✕</span> No personal information (no name, email, account, or device ID)</li>
+    <li><span class="cross">✕</span> Never your thoughts, voice, or transcriptions</li>
     <li><span class="cross">✕</span> No crash reporting</li>
     <li><span class="cross">✕</span> No advertising identifiers</li>
     <li><span class="cross">✕</span> No location data</li>
-    <li><span class="cross">✕</span> No device information sent anywhere</li>
-    <li><span class="cross">✕</span> No behavioral tracking</li>
+    <li><span class="cross">✕</span> No behavioral tracking or profiling</li>
+    <li><span class="check">✓</span> Anonymous usage counts &mdash; only with your permission (see Analytics)</li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-label">ANALYTICS</div>
+  <h2>Anonymous, optional, and never your thoughts.</h2>
+  <p>To understand how Brain Dump is used and improve it, the app can send <span class="highlight">anonymous usage events</span> &mdash; for example, that a screen was opened or a button was tapped. These contain <span class="highlight">no thought content</span>, no personal identifiers, and no device ID. They are processed by <a href="https://aptabase.com">Aptabase</a>, a privacy-focused analytics provider, on EU-based infrastructure.</p>
+  <p>You control this. In the EU, EEA, and UK it is <span class="highlight">off until you opt in</span>; elsewhere it is on by default after the onboarding disclosure and can be turned off at any time in <span class="highlight">Settings &rarr; Privacy &rarr; Share anonymous usage stats</span>.</p>
+  <ul class="check-list">
+    <li><span class="check">✓</span> Anonymous counts only (events like &ldquo;app opened&rdquo;) &mdash; never thought content</li>
+    <li><span class="check">✓</span> No user, account, or device identifier &mdash; sessions are random and rotating</li>
+    <li><span class="check">✓</span> EU/EEA/UK: opt-in. Elsewhere: opt-out, toggleable in Settings anytime</li>
+    <li><span class="check">✓</span> Sent over an encrypted connection to Aptabase (EU region)</li>
+    <li><span class="check">✓</span> The app also keeps simple usage counts on your device that never leave it</li>
   </ul>
 </section>
 
@@ -201,14 +215,14 @@ a:hover { text-decoration: underline; }
 
 <section>
   <div class="section-label">THIRD PARTIES</div>
-  <h2>None.</h2>
-  <p>Brain Dump does not integrate any third-party analytics, advertising networks, crash reporting services, or tracking SDKs. <span class="highlight">There are no third parties with access to your data.</span></p>
+  <h2>Only what you choose.</h2>
+  <p>The only third parties that ever receive data are the <span class="highlight">AI provider you pick</span> (Claude, OpenAI, or Gemini &mdash; only when you trigger AI processing; Ollama stays fully local), and <span class="highlight">Aptabase</span> for anonymous usage analytics, only while you have that enabled. <span class="highlight">No third party ever receives your thoughts for analytics.</span></p>
   <ul class="check-list">
     <li><span class="cross">✕</span> No advertising networks</li>
-    <li><span class="cross">✕</span> No analytics SDKs (Firebase, Mixpanel, etc.)</span></li>
     <li><span class="cross">✕</span> No crash reporting services</li>
     <li><span class="cross">✕</span> No social media integrations</li>
-    <li><span class="cross">✕</span> No data brokers or data sharing agreements</li>
+    <li><span class="cross">✕</span> No data brokers or data-sharing agreements</li>
+    <li><span class="check">✓</span> Aptabase (anonymous analytics, EU) &mdash; only while you opt in / stay opted in</li>
   </ul>
 </section>
 
@@ -220,6 +234,7 @@ a:hover { text-decoration: underline; }
     <li><span class="check">✓</span> Export all thoughts at any time (JSON, Markdown, Obsidian, ZIP)</li>
     <li><span class="check">✓</span> Delete individual thoughts at any time</li>
     <li><span class="check">✓</span> Wipe all data completely from Settings → Privacy & Data → Clear All Data</li>
+    <li><span class="check">✓</span> Turn anonymous analytics off at any time in Settings → Privacy</li>
     <li><span class="check">✓</span> Uninstalling the app removes all local data permanently</li>
   </ul>
 </section>
